@@ -1,13 +1,16 @@
 require 'csv'
+require_relative 'enrollment_repository'
 
 class DistrictRepository
-  attr_reader :districts
+  attr_reader :districts, :enrollment_repository
 
   def initialize(districts = [])
     @districts = districts
+    @enrollment_repository = EnrollmentRepository.new
   end
 
   def load_data(data)
+    enrollment_repository.load_data(data)
     file = data.dig(:enrollment, :kindergarten)
     sort_years(file)
   end
@@ -38,7 +41,8 @@ class DistrictRepository
 
   def create_districts(collection)
       collection.each do |line|
-        districts << District.new(line)
+        enrollment_data = enrollment_repository.find_by_name(line[:name])
+        districts << District.new(line, enrollment_data)
       end
   end
 

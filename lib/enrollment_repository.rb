@@ -2,7 +2,7 @@ require 'pry'
 require 'csv'
 
 class EnrollmentRepository
-  attr_reader     :enrollments
+  attr_reader :enrollments
 
   def initialize(enrollments = [])
     @enrollments = enrollments

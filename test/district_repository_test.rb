@@ -1,6 +1,7 @@
 require_relative 'test_helper'
 require_relative '../lib/district_repository'
 require_relative '../lib/district'
+require_relative '../lib/enrollment'
 
 class DistrictRepositoryTest < Minitest::Test
 
@@ -14,7 +15,7 @@ class DistrictRepositoryTest < Minitest::Test
     district = dr.find_by_name("ACADEMY 20")
     assert_instance_of District, district
   end
-
+  
   def test_it_can_find_by_name
     d1 = District.new({:name => "Adams"})
     d2 = District.new({:name => "ACADEMY 20"})

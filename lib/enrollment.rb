@@ -1,10 +1,11 @@
 require 'pry'
 
 class Enrollment
-  attr_reader :attributes
+  attr_reader :attributes, :name
 
   def initialize(attributes)
     @attributes = attributes
+    @name = attributes[:name]
   end
 
   def kindergarten_participation_by_year
