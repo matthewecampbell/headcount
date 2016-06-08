@@ -1,6 +1,6 @@
 require 'csv'
 
-class DistrictRepo
+class DistrictRepository
   attr_reader :districts
 
   def initialize(districts = [])
@@ -9,18 +9,34 @@ class DistrictRepo
 
   def load_data(data)
     file = data.dig(:enrollment, :kindergarten)
+    sort_years(file)
+  end
+
+  def sort_years(file)
     years = CSV.foreach(file, headers: true, header_converters: :symbol).map do |row|
       { :name => row[:location], row[:timeframe].to_i => row[:data].to_f }
     end
+    group_by_district(years)
+  end
+
+  def group_by_district(years)
     group_names = years.group_by do |row|
       row[:name]
     end
+    move_to_collections(group_names)
+  end
+
+  def move_to_collections(group_names)
     collection = group_names.map do |name, years|
       merged = years.reduce({}, :merge)
       merged.delete(:name)
       { name: name,
         kindergarten_participation: merged }
       end
+      create_districts(collection)
+  end
+
+  def create_districts(collection)
       collection.each do |line|
         districts << District.new(line)
       end
