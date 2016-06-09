@@ -1,11 +1,11 @@
-require_relative 'enrollment'
+# require_relative 'enrollment'
 
 class District
-  attr_reader :attributes, :enrollment_data
+  attr_reader :attributes, :dr
 
-  def initialize(attributes, enrollment_data = nil)
+  def initialize(attributes, dr = nil)
     @attributes = attributes
-    @enrollment_data = enrollment_data
+    @dr = dr
   end
 
   def name
@@ -13,7 +13,7 @@ class District
   end
 
   def enrollment
-    enrollment_data
+    dr.find_enrollment(attributes[:name])
   end
 
 end

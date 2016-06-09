@@ -5,13 +5,29 @@ require_relative 'enrollment'
 class EnrollmentRepository
   attr_reader :enrollments
 
-  def initialize(enrollments = [])
+  def initialize(enrollments = {})
     @enrollments = enrollments
   end
 
+  def find_file(data)
+    file = data.keys.map do |key|
+      if key == :enrollment
+        data[:enrollment].keys.map do |next_key|
+          if next_key == :kindergarten
+             data[:enrollment][:kindergarten]
+          elsif
+            next_key == :high_school_graduation
+             data[:enrollment][:high_school_graduation]
+          end
+        end
+      end
+    end
+    file.flatten
+  end
+
   def load_data(data)
-    file = data.dig(:enrollment, :kindergarten)
-    sort_years(file)
+    file = find_file(data)
+    file.map { |file_path| sort_years(file_path) }
   end
 
   def sort_years(file)
@@ -32,7 +48,7 @@ class EnrollmentRepository
     collection = group_names.map do |name, years|
       merged = years.reduce({}, :merge)
       merged.delete(:name)
-      { name: name,
+      { name: name.upcase,
         kindergarten_participation: merged }
       end
       create_enrollments(collection)
@@ -40,14 +56,12 @@ class EnrollmentRepository
 
   def create_enrollments(collection)
       collection.each do |line|
-        enrollments << Enrollment.new(line)
+        enrollments[line[:name]] = Enrollment.new(line)
       end
   end
 
   def find_by_name(district_name)
-    enrollments.detect do |enrollment|
-      enrollment.attributes[:name] == district_name
-    end
+    enrollments[district_name]
   end
 
 end

@@ -22,4 +22,14 @@ class Enrollment
     kindergarten_participation_by_year[year]
   end
 
+  def graduation_rate_by_year
+    attributes[:graduation_rate].reduce({}) do |result, pair|
+      result.merge({pair.first => truncate_float(pair.last)})
+    end
+  end
+
+  def graduation_rate_in_year(year)
+    graduation_rate_by_year[year]
+  end
+
 end
