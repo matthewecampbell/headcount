@@ -17,7 +17,7 @@ class DistrictTest < Minitest::Test
           }
         })
     district = dr.find_by_name("ACADEMY 20")
-    assert_equal 0.391, district.enrollment.kindergarten_participation_in_year(2010)
+    assert_equal 0.436, district.enrollment.kindergarten_participation_in_year(2010)
   end
 
 end

@@ -1,5 +1,6 @@
 require 'csv'
 require_relative 'enrollment_repository'
+require_relative 'district'
 
 class DistrictRepository
   attr_reader :districts, :enrollment_repository
@@ -48,7 +49,7 @@ class DistrictRepository
 
   def find_by_name(district_name)
     districts.detect do |district|
-      district.attributes[:name] == district_name
+      district.attributes[:name].upcase == district_name.upcase
     end
   end
 
