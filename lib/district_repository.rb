@@ -79,10 +79,12 @@ class DistrictRepository
     enrollment_repository.enrollments[name]
   end
 
-
   def repositories
     {:enrollment => enrollment_repository}
   end
 
+  def get_all_district_names
+    enrollment_repository.enrollments.keys
+  end
 
 end

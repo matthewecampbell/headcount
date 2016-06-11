@@ -15,6 +15,7 @@ class Enrollment
   end
 
   def truncate_float(float)
+    float = 0 if float.nan?
     (float * 1000).floor / 1000.to_f
   end
 
@@ -23,7 +24,7 @@ class Enrollment
   end
 
   def graduation_rate_by_year
-    attributes[:graduation_rate].reduce({}) do |result, pair|
+    attributes[:high_school_graduation].reduce({}) do |result, pair|
       result.merge({pair.first => truncate_float(pair.last)})
     end
   end
@@ -31,7 +32,6 @@ class Enrollment
   def graduation_rate_in_year(year)
     graduation_rate_by_year[year]
   end
-
 
   def kindergarten_participation
     attributes[:kindergarten_participation]
@@ -45,5 +45,4 @@ class Enrollment
   def high_school_graduation_data_exists?
     attributes.has_key?(:high_school_graduation)
   end
-
 end
