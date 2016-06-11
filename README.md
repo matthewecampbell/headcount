@@ -1,3 +1,29 @@
-## Headcount
+# HEADCOUNT
 
-Find the assignment here: https://github.com/turingschool/curriculum/blob/master/source/projects/headcount.markdown
+##### Project Overview
+
+We'll build upon a dataset centered around schools in Colorado provided by the Annie E. Casey foundation. What can we learn about education across the state?
+
+Starting with the CSV data we will:
+
+* build a "Data Access Layer" which allows us to query/search the underlying data
+* build a "Relationships Layer" which creates connections between related data
+* build an "Analysis Layer" which uses the data and relationships to draw conclusions
+
+***
+
+* [HEADCOUNT Original Spec](https://github.com/turingschool/curriculum/blob/master/source/projects/headcount.markdown)
+
+***
+
+##### Pair Project: Matt Campbell & Kris Sparks
+
+(ADD NOTES ABOUT PROGRESS, LEVEL OF COMPLETION ETC)
+
+##### Learning Goals
+
+Use tests to drive both the design and implementation of code
+Decompose a large application into components such as parsers, repositories, and analysis tools
+Use test fixtures instead of actual data when testing
+Connect related objects together through references
+Learn an agile approach to building software
