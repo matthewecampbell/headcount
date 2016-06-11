@@ -45,4 +45,5 @@ class Enrollment
   def high_school_graduation_data_exists?
     attributes.has_key?(:high_school_graduation)
   end
+  
 end
