@@ -24,7 +24,6 @@ class DistrictRepository
         end
       end
     end
-    binding.pry
     file.flatten
   end
 
@@ -79,5 +78,11 @@ class DistrictRepository
   def find_enrollment(name)
     enrollment_repository.enrollments[name]
   end
+
+
+  def repositories
+    {:enrollment => enrollment_repository}
+  end
+
 
 end
