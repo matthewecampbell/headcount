@@ -24,17 +24,18 @@ class EnrollmentRepository
         name = row[:location].upcase
         year = row[:timeframe].to_i
         percent = row[:data].to_f
-        grade = grade_levels[data.values[0].keys[index]]
-        check_enrollments = find_by_name(name)
-        if check_enrollments == nil
+        #changed commented code to .values[index]
+        grade = grade_levels.values[index] #[data.values[0].keys[index]]
+        enrollments_object = find_by_name(name)
+        if enrollments_object == nil
           enrollments[name] = Enrollment.new({:name => name, grade => {year => percent}})
         else
-          add_grade(check_enrollments, grade, year, percent)
+          add_data(enrollments_object, grade, year, percent)
       end
     end
   end
 
-  def add_grade(enrollment_object, grade, year, percent)
+  def add_data(enrollment_object, grade, year, percent)
     if grade == :kindergarten_participation
       enrollment_object.kindergarten_participation.merge!({year => percent})
     else

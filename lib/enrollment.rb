@@ -24,7 +24,7 @@ class Enrollment
   end
 
   def graduation_rate_by_year
-    attributes[:high_school_graduation].reduce({}) do |result, pair|
+    attributes[:graduation_rate].reduce({}) do |result, pair|
       result.merge({pair.first => truncate_float(pair.last)})
     end
   end
@@ -45,5 +45,5 @@ class Enrollment
   def high_school_graduation_data_exists?
     attributes.has_key?(:high_school_graduation)
   end
-  
+
 end
