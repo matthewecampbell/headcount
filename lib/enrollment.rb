@@ -38,12 +38,14 @@ class Enrollment
   end
 
   def high_school_graduation
-    return attributes[:high_school_graduation] if high_school_graduation_data_exists?
+    if high_school_graduation_data_exists?
+      return attributes[:high_school_graduation]
+    end
     attributes[:high_school_graduation] = Hash.new
   end
 
   def high_school_graduation_data_exists?
     attributes.has_key?(:high_school_graduation)
   end
-  
+
 end
