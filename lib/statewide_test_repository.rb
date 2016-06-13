@@ -37,7 +37,8 @@ class StatewideTestRepository
       name = row[:location].upcase
       subject = row[:score].downcase.to_sym
       year = row[:timeframe].to_i
-      percent = truncate_float(row[:data].to_f)
+      percent = "N/A"
+      percent = truncate_float(row[:data].to_f) if row[:data] != "N/A"
       grade = test_results.values[index]
       statewide_tests_object = find_by_name(name)
       if statewide_tests_object == nil
@@ -65,7 +66,9 @@ class StatewideTestRepository
       name = row[:location].upcase
       ethnicity = test_results[row[:race_ethnicity].upcase].to_sym
       year = row[:timeframe].to_i
-      percent = truncate_float(row[:data].to_f)
+      # percents is thing unless it is NA
+      percent = "N/A"
+      percent = truncate_float(row[:data].to_f) if row[:data] != "N/A"
       subject = data.values[0].keys[index].to_sym
       statewide_tests_object = find_by_name(name)
       if statewide_tests_object == nil
@@ -102,6 +105,6 @@ class StatewideTestRepository
 
   def truncate_float(float)
     float = 0 if float.nan?
-    (float * 1000).floor / 1000.to_f
+      (float * 1000).floor / 1000.to_f
   end
 end

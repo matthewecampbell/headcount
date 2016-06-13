@@ -13,14 +13,15 @@ class DistrictRepository
     @districts = districts
     @enrollment_repository = EnrollmentRepository.new
     @statewide_test_repository = StatewideTestRepository.new
-    @data_collections
   end
 
   def load_data(data)
-    enrollment_data = {}
-    enrollment_data[data.first[0]] = data.first[1]
-    enrollment_repository.load_data(enrollment_data)
-    if data.count > 1
+    if data.keys.include?(:enrollment)
+      enrollment_data = {}
+      enrollment_data[data.first[0]] = data.first[1]
+      enrollment_repository.load_data(enrollment_data)
+    end
+    if data.keys.include?(:statewide_testing)
       statewide_testing_data = {}
       statewide_testing_data[:statewide_testing] = data[:statewide_testing]
       statewide_test_repository.load_data(statewide_testing_data)
