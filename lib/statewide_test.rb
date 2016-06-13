@@ -1,28 +1,37 @@
 require 'pry'
+require_relative 'errors'
 
 class StatewideTest
-  attr_reader :attributes, :name
+  attr_reader :attributes, :name, :grade_levels
 
   def initialize(attributes)
     @attributes = attributes
     @name = attributes[:name]
-  end
+    @grade_levels =   {
+      3 => :third_grade,
+      8 => :eighth_grade
+    }
 
-  def third_grade
-    attributes[:third_grade]
-  end
-
-  def eighth_grade
-    return attributes[:eighth_grade] if eighth_grade_data_exists?
-    attributes[:eighth_grade] = Hash.new
-  end
-
-  def eighth_grade_data_exists?
-    attributes.has_key?(:eighth_grade)
   end
 
   def proficient_by_grade(grade)
-    
+    # raise UnkownDataError if grade_levels[grade].nil?
+    attributes[grade_levels[grade]]
+  end
+
+  def proficient_by_race_and_ethnicity(race)
+    # raise UnkownDataError if grade_levels[grade].nil?
+    attributes[race]
+  end
+
+  def proficient_for_subject_by_grade_in_year(subject, grade, year)
+    # raise UnkownDataError if grade_levels[grade].nil?
+    attributes[grade_levels[grade]][year][subject]
+  end
+
+  def proficient_for_subject_by_race_in_year(subject, race, year)
+    # raise UnkownDataError if grade_levels[grade].nil?
+    attributes[race][year][subject]
   end
 
 end

@@ -16,4 +16,8 @@ class District
     dr.find_enrollment(attributes[:name])
   end
 
+  def statewide_test
+    dr.find_statewide_test(attributes[:name])
+  end
+
 end
