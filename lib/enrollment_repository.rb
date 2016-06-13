@@ -20,6 +20,7 @@ class EnrollmentRepository
   end
 
   def read_file(data, filepath, index)
+    #refactor?
       CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
         name = row[:location].upcase
         year = row[:timeframe].to_i
@@ -27,8 +28,9 @@ class EnrollmentRepository
         #changed commented code to .values[index]
         grade = grade_levels.values[index] #[data.values[0].keys[index]]
         enrollments_object = find_by_name(name)
+        enrollment_attributes = {:name => name, grade => {year => percent}}
         if enrollments_object == nil
-          enrollments[name] = Enrollment.new({:name => name, grade => {year => percent}})
+          enrollments[name] = Enrollment.new(enrollment_attributes)
         else
           add_data(enrollments_object, grade, year, percent)
       end

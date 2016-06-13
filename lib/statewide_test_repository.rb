@@ -32,6 +32,7 @@ class StatewideTestRepository
   end
 
   def read_file_1(data, filepath, index)
+    #refactor
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
       name = row[:location].upcase
       subject = row[:score].downcase.to_sym
@@ -59,6 +60,7 @@ class StatewideTestRepository
 
 
   def read_file_2(data, filepath, index)
+    #refactor
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
       name = row[:location].upcase
       ethnicity = test_results[row[:race_ethnicity].upcase].to_sym

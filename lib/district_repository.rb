@@ -2,16 +2,17 @@ require 'csv'
 require_relative 'enrollment_repository'
 require_relative 'district'
 require_relative 'statewide_test_repository'
-require_relative 'parser'
 
 class DistrictRepository
-  attr_reader :districts, :enrollment_repository, :statewide_test_repository, :parser
+  attr_reader :districts,
+              :enrollment_repository,
+              :statewide_test_repository,
+              :parser
 
   def initialize(districts = {})
     @districts = districts
     @enrollment_repository = EnrollmentRepository.new
     @statewide_test_repository = StatewideTestRepository.new
-    @parser = Parser.new
     @data_collections
   end
 
@@ -25,10 +26,6 @@ class DistrictRepository
       statewide_test_repository.load_data(statewide_testing_data)
     end
     create_districts
-    # file = find_file(data)
-    # if file != nil
-    # file.map { |file_path| sort_years(file_path) }
-  # end
   end
 
   def create_districts

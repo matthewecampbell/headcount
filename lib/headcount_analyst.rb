@@ -52,6 +52,7 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_correlates_with_high_school_graduation(district)
+    #refactor
     if district.class == String
       district = district
     elsif district.include?(:for)
@@ -83,6 +84,7 @@ class HeadcountAnalyst
   end
 
   def statewide_comparison(sub_districts = nil)
+    #refactor
     district_names = dr.get_all_district_names
     sub_districts
     results = []
