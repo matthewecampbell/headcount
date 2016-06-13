@@ -15,22 +15,22 @@ class StatewideTest
   end
 
   def proficient_by_grade(grade)
-    # raise UnkownDataError if grade_levels[grade].nil?
+    raise UnknownDataError if grade_levels[grade].nil?
     attributes[grade_levels[grade]]
   end
 
-  def proficient_by_race_and_ethnicity(race)
-    # raise UnkownDataError if grade_levels[grade].nil?
+  def proficient_by_race_or_ethnicity(race)
+    raise UnknownRaceError if attributes[race].nil?
     attributes[race]
   end
 
   def proficient_for_subject_by_grade_in_year(subject, grade, year)
-    # raise UnkownDataError if grade_levels[grade].nil?
+    raise UnknownDataError if grade_levels[grade].nil?
     attributes[grade_levels[grade]][year][subject]
   end
 
   def proficient_for_subject_by_race_in_year(subject, race, year)
-    # raise UnkownDataError if grade_levels[grade].nil?
+    raise UnknownDataError if attributes[race].nil?
     attributes[race][year][subject]
   end
 

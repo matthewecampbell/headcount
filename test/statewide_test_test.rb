@@ -28,12 +28,12 @@ class StatewideTestTest < Minitest::Test
    }
 
    assert_equal results, st.proficient_by_grade(3)
-  #  assert_raises(UnkownDataError) do
-  #    str.proficient_by_grade(5)
-  #  end
+   assert_raises(UnknownDataError) do
+         st.proficient_for_subject_by_race_in_year(:math, 5, 2008)
+       end
   end
 
-  def test_it_get_proficient_by_race_and_ethnicity
+  def test_it_get_proficient_by_race_or_ethnicity
     str = StatewideTestRepository.new
     str.load_data({
       :statewide_testing => {
@@ -52,7 +52,7 @@ class StatewideTestTest < Minitest::Test
      2014 => {math: 0.800, reading: 0.855, writing: 0.789}
     }
 
-    assert_equal results, st.proficient_by_race_and_ethnicity(:asian)
+    assert_equal results, st.proficient_by_race_or_ethnicity(:asian)
   end
 
   def test_it_get_proficient_for_subject_by_grade_in_year
