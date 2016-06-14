@@ -20,4 +20,21 @@ class DistrictTest < Minitest::Test
     assert_equal 0.436, district.enrollment.kindergarten_participation_in_year(2010)
   end
 
+  def test_it_can_get_kindergarten_partcipation_in_year
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./data/Kindergartners in full-day program.csv"
+      },
+      :economic_profile => {
+        :median_household_income => "./data/Median household income.csv",
+        :children_in_poverty => "./data/School-aged children in poverty.csv",
+        :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
+        :title_i => "./data/Title I students.csv"
+      }
+      })
+      district = dr.find_by_name("ACADEMY 20")
+      assert_instance_of EconomicProfile, district.economic_profile
+  end
+
 end

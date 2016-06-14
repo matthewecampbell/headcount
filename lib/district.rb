@@ -20,4 +20,8 @@ class District
     dr.find_statewide_test(attributes[:name])
   end
 
+  def economic_profile
+    dr.find_economic_profile(attributes[:name])
+  end
+
 end

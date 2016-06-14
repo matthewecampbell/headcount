@@ -2,17 +2,20 @@ require 'csv'
 require_relative 'enrollment_repository'
 require_relative 'district'
 require_relative 'statewide_test_repository'
+require_relative 'economic_profile_repository'
 
 class DistrictRepository
   attr_reader :districts,
               :enrollment_repository,
               :statewide_test_repository,
-              :parser
+              :parser,
+              :economic_profile_repository
 
   def initialize(districts = {})
     @districts = districts
     @enrollment_repository = EnrollmentRepository.new
     @statewide_test_repository = StatewideTestRepository.new
+    @economic_profile_repository = EconomicProfileRepository.new
   end
 
   def load_data(data)
@@ -25,6 +28,11 @@ class DistrictRepository
       statewide_testing_data = {}
       statewide_testing_data[:statewide_testing] = data[:statewide_testing]
       statewide_test_repository.load_data(statewide_testing_data)
+    end
+    if data.keys.include?(:economic_profile)
+      economic_profile_data = {}
+      economic_profile_data[:economic_profile] = data[:economic_profile]
+      economic_profile_repository.load_data(economic_profile_data)
     end
     create_districts
   end
@@ -62,6 +70,10 @@ class DistrictRepository
 
   def find_statewide_test(name)
     statewide_test_repository.statewide_tests[name]
+  end
+
+  def find_economic_profile(name)
+    economic_profile_repository.economic_profiles[name]
   end
 
 end
