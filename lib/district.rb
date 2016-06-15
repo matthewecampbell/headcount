@@ -1,5 +1,3 @@
-# require_relative 'enrollment'
-
 class District
   attr_reader :attributes, :dr
 

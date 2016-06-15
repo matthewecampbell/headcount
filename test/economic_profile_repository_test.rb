@@ -1,5 +1,6 @@
 require_relative 'test_helper'
 require_relative '../lib/economic_profile_repository'
+require_relative '../lib/result_set'
 
 
 class EconomicProfileRepositoryTest < Minitest::Test
