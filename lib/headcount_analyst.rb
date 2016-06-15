@@ -9,61 +9,45 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_rate_variation(dist, divisor)
-    # compares kindergarten participation in one district to another (OR VS STATE)
     dist_part = part_rate(district_years(dist, :kindergarten_participation))
     div_part = part_rate(divisor_years(divisor, :kindergarten_participation))
     truncate_float(dist_part/div_part)
   end
 
   def district_years(dist, grade_level)
-    # returns a hash of years pointing to participation percentage for the primary DISTRICT
     dr.find_enrollment(dist).attributes[grade_level]
   end
 
   def divisor_years(divisor, grade_level)
-    # returns a hash of years pointing to participation percentage for the "other" district (OR STATE)
     dr.find_enrollment(divisor[:against]).attributes[grade_level]
   end
 
   def part_rate(data)
-    # if you don't know what this method does it's time to go home
     number_of_years = data.count
     rate = data.values.reduce(:+)
     rate/number_of_years
   end
 
   def kindergarten_participation_rate_variation_trend(dist, divisor)
-    # returns a hash of the merged values of the district and divisor(district or STATE) percentages by year
     dsyears = district_years(dist, :kindergarten_participation)
     dvyears = divisor_years(divisor, :kindergarten_participation)
     dsyears.merge(dvyears) {|key, val, newval| truncate_float(val/newval) }
   end
 
   def kindergarten_participation_against_high_school_graduation(dist)
-    # returns the percentage of kinder participation divided by graduation by district (against STATE (hardcoded))
     k = kindergarten_participation_rate_variation(dist, {:against=>"COLORADO"})
     h = high_school_graduation_rate_variation(dist, {:against=>"COLORADO"})
     truncate_float(k/h)
   end
 
   def high_school_graduation_rate_variation(dist, divisor)
-    # returns the percentage of graduation rates divided by that of another district (or STATE)
     dist_part = part_rate(district_years(dist, :high_school_graduation))
     div_part = part_rate(divisor_years(divisor, :high_school_graduation))
     truncate_float(dist_part/div_part)
   end
 
   def kindergarten_participation_correlates_with_high_school_graduation(dist)
-    case
-    when dist.class == String
-      district_name = dist
-    when dist.include?(:for)
-      district_name = dist[:for]
-    when dist.include?(:across)
-      district_name = dist[:across]
-    else
-      district_name = dist
-    end
+    district_name = dist.class == String ?  dist : dist.values[0]
     parse_correlation_distric(district_name)
   end
 
@@ -96,6 +80,7 @@ class HeadcountAnalyst
   end
 
   def compare_statewide_data(district_names)
+    # enums
     results = []
     district_names.map do |district_name|
       if district_name != "COLORADO"
@@ -106,6 +91,7 @@ class HeadcountAnalyst
   end
 
   def calculate_statewide_data(results)
+    # use an appropriate enumberable here
     total = results.count
     counter = 0
     results.each { |result| counter += 1 if result == true }
@@ -138,11 +124,11 @@ class HeadcountAnalyst
     matching_districts = []
     dr.districts.keys.each do |district_name|
       if district_name != "COLORADO"
-      district = dr.find_by_name(district_name)
-      check_1 = median_household_income?(district)
-      check_2 = children_in_poverty?(district)
-      if check_1 && check_2
-        matching_districts << ResultEntry.new({name: district_name, median_household_income:
+        district = dr.find_by_name(district_name)
+        check_1 = median_household_income?(district)
+        check_2 = children_in_poverty?(district)
+        if check_1 && check_2
+          matching_districts << ResultEntry.new({name: district_name, median_household_income:
           @income_average, children_in_poverty_rate: @poverty_average,
           })
         end
@@ -163,6 +149,7 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_correlates_with_household_income(district_name)
+    # use an appropriate enumberable here
     results = []
     if district_name[:for] == "STATEWIDE"
     dr.districts.keys.each do |district_name|
@@ -186,6 +173,8 @@ class HeadcountAnalyst
   end
 
   def median_household_income?(district)
+    # use an appropriate enumberable here
+
     # free_and_reduced_price_lunch
     nums = []
     percentage = district.economic_profile.attributes[:median_household_income].values

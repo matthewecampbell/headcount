@@ -45,7 +45,7 @@ class EconomicProfileTest < Minitest::Test
       }
     })
     ep = epr.find_by_name("ACADEMY 20")
-    assert_equal 0.047, ep.children_in_poverty_in_year(2009)
+    assert_equal ({:total=>921, :percentage=>0.047}), ep.children_in_poverty_in_year(2009)
     assert_raises(UnknownDataError) do
       ep.children_in_poverty_in_year(2020)
     end
