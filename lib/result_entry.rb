@@ -24,5 +24,4 @@ attr_reader :attributes
   def median_household_income
     attributes[:median_household_income]
   end
-
 end

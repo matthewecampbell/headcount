@@ -19,7 +19,6 @@ class EconomicProfileRepositoryTest < Minitest::Test
 
   def test_it_can_find_by_name
     ep = epr.find_by_name("ACADEMY 20")
-
     assert_instance_of EconomicProfile, ep
   end
 
