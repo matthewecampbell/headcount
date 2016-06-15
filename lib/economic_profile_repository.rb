@@ -14,7 +14,7 @@ class EconomicProfileRepository
     @data_types =   {
       :median_household_income => :median_household_income,
       :children_in_poverty => :children_in_poverty,
-      :free_or_reduced_price_lunch => :free_or_reduced_price_lunch,
+      :free_and_reduced_price_lunch_rate => :free_and_reduced_price_lunch_rate,
       :title_i => :title_i
       }
   end
@@ -38,64 +38,38 @@ class EconomicProfileRepository
       data_type   = find_data_types(data_types, index)
       object      = find_by_name(name)
 
-      create_economic_object(object, name, data_type, year, income)
+      create_economic_income_object(object, name, data_type, year, income)
     end
   end
 
   def add_economic_data(object, category, year, data)
-    if object_category_exists?(object, category)
-      object.attributes[category] = {year => data}
-    elsif object.attributes[category][year].nil?
-      object.attributes[category][year] = data
-    else
-      object.attributes[category][year] = data
-    end
+    add_income_data_to_object(object, category, year, data)
   end
 
   def read_poverty_file(data, filepath, index)
     #refactor
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
-      name = row[:location].upcase
-      year = row[:timeframe].to_i
-      data_format = row[:dataformat]
-      if row[:dataformat] == "Percent"
-        data_format = :percentage
-      else
-        data_format = :total
-      end
-      number = "N/A"
-      if data_format == :percentage
-      number = row[:data].to_f if row[:data] != "N/A"
-      else
-      number = row[:data].to_i if row[:data] != "N/A"
-      end
-      data_type = data_types.values[index]
-      object = find_by_name(name)
-      if object == nil
-      economic_profiles[name] = EconomicProfile.new({:name => name, data_type  =>{year => {data_format => number}}})
-      else
-        add_poverty_data(object, data_type, year, data_format, number)
-      end
+      name        = find_name(row).upcase
+      year        = find_year(row)
+      data_format = find_data_format(row)
+      number      = find_number(row, data_format)
+      data_type   = find_data_types(data_types, index)
+      object      = find_by_name(name)
+
+      create_poverty_object(object, name, year, data_format, number, data_type)
     end
   end
 
+
   def add_poverty_data(object, data_type, year, data_format, number)
-    if object.attributes[data_type].nil?
-      object.attributes[data_type] = {year => {data_format => number}}
-    elsif object.attributes[data_type][year].nil?
-      object.attributes[data_type][year] = {data_format => number}
-    elsif object.attributes[data_type][year][data_format].nil?
-      object.attributes[data_type][year][data_format] =  number
-    else
-      object.attributes[data_type][year][data_format] = number
-    end
+    add_poverty_data_to_object(object, data_type, year, data_format, number)
   end
 
   def read_lunch_file(data, filepath, index)
     #refactor
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
-      name = row[:location].upcase
-      year = row[:timeframe].to_i
+      name = find_name(row).upcase
+      year = find_year(row)
       if row[:dataformat] == "Percent"
         data_format = :percentage
       else
