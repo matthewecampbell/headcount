@@ -1,6 +1,8 @@
 require_relative 'errors'
+require_relative 'calc'
 
 class EconomicProfile
+    include Calc
   attr_reader :attributes
 
   def initialize(attributes)
@@ -25,7 +27,7 @@ class EconomicProfile
   def children_in_poverty_in_year(year)
     children_in_poverty = attributes[:children_in_poverty]
     raise UnknownDataError if children_in_poverty[year].nil?
-    children_in_poverty[year]
+    children_in_poverty[year][:percentage]
   end
 
   def free_or_reduced_price_lunch_percentage_in_year(year)
@@ -45,10 +47,4 @@ class EconomicProfile
     raise UnknownDataError if title_i[year].nil?
     title_i[year]
   end
-
-  def truncate_float(float)
-    float = 0 if float.nan?
-    (float * 1000).floor / 1000.to_f
-  end
-
 end

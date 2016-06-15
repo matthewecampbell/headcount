@@ -1,4 +1,4 @@
-require_relative '../test/test_helper'
+  require_relative '../test/test_helper'
 require_relative '../lib/headcount_analyst'
 require_relative '../lib/district_repository'
 require_relative '../lib/enrollment'
@@ -67,48 +67,71 @@ class HeadcountAnalystTest < Minitest::Test
       ha = HeadcountAnalyst.new(dr)
 
       assert ha.kindergarten_participation_correlates_with_high_school_graduation(:for => 'ACADEMY 20')
+  end
+
+  def test_kindergarten_participation_correlates_with_high_school_graduation_statewide
+
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./data/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./data/High school graduation rates.csv"
+      }
+      })
+      ha = HeadcountAnalyst.new(dr)
+
+    refute ha.kindergarten_participation_correlates_with_high_school_graduation(:for => 'STATEWIDE')
+  end
+
+  def test_can_get_all_district_names
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./data/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./data/High school graduation rates.csv"
+      }
+      })
+      ha = HeadcountAnalyst.new(dr)
+
+      assert_equal ["COLORADO", "ACADEMY 20", "ADAMS COUNTY 14"], dr.get_all_district_names[0..2]
+      assert_equal 181, dr.get_all_district_names.count
     end
 
-    def test_kindergarten_participation_correlates_with_high_school_graduation_statewide
+  def test_can_get_subset_district_names
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./data/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./data/High school graduation rates.csv"
+      }
+      })
+      ha = HeadcountAnalyst.new(dr)
 
-      dr = DistrictRepository.new
-      dr.load_data({
-        :enrollment => {
-          :kindergarten => "./data/Kindergartners in full-day program.csv",
-          :high_school_graduation => "./data/High school graduation rates.csv"
-        }
-        })
-        ha = HeadcountAnalyst.new(dr)
+      refute ha.kindergarten_participation_correlates_with_high_school_graduation(
+      :across => ['ACADEMY 20', 'PUEBLO CITY 60', 'AGATE 300', 'ADAMS COUNTY 14'])
+  end
 
-      refute ha.kindergarten_participation_correlates_with_high_school_graduation(:for => 'STATEWIDE')
-    end
+  def test_high_poverty_and_high_school_graduation
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./data/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./data/High school graduation rates.csv"
+      },
+      :economic_profile => {
+        :median_household_income => "./data/Median household income.csv",
+        :children_in_poverty => "./data/School-aged children in poverty.csv",
+        :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
+        :title_i => "./data/Title I students.csv"
+      }
+    })
+    ha = HeadcountAnalyst.new(dr)
 
-    def test_can_get_all_district_names
-      dr = DistrictRepository.new
-      dr.load_data({
-        :enrollment => {
-          :kindergarten => "./data/Kindergartners in full-day program.csv",
-          :high_school_graduation => "./data/High school graduation rates.csv"
-        }
-        })
-        ha = HeadcountAnalyst.new(dr)
-
-        assert_equal ["COLORADO", "ACADEMY 20", "ADAMS COUNTY 14"], dr.get_all_district_names[0..2]
-        assert_equal 181, dr.get_all_district_names.count
-      end
-
-    def test_can_get_subset_district_names
-      dr = DistrictRepository.new
-      dr.load_data({
-        :enrollment => {
-          :kindergarten => "./data/Kindergartners in full-day program.csv",
-          :high_school_graduation => "./data/High school graduation rates.csv"
-        }
-        })
-        ha = HeadcountAnalyst.new(dr)
-
-        refute  ha.kindergarten_participation_correlates_with_high_school_graduation(
-        :across => ['ACADEMY 20', 'PUEBLO CITY 60', 'AGATE 300', 'ADAMS COUNTY 14'])
-      end
+    rs = ha.high_poverty_and_high_school_graduation
+    assert_instance_of ResultSet, rs
+    rs1 = ha.high_income_disparity
+    assert_instance_of ResultSet, rs1
+    ha.kindergarten_participation_against_household_income("ACADEMY 20")
+  end
 
 end

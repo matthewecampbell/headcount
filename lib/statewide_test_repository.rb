@@ -1,7 +1,9 @@
 require 'csv'
 require_relative 'statewide_test'
+require_relative 'calc'
 
 class StatewideTestRepository
+    include Calc
   attr_reader :statewide_tests, :test_results
 
   def initialize(statewide_tests = {})
@@ -100,10 +102,5 @@ class StatewideTestRepository
     else
       read_file_2(data, filepath, index)
     end
-  end
-
-  def truncate_float(float)
-    float = 0 if float.nan?
-      (float * 1000).floor / 1000.to_f
   end
 end

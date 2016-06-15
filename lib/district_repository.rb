@@ -39,9 +39,27 @@ class DistrictRepository
 
   def create_districts
     enrollment_repository.enrollments.keys.each do |name|
-       districts[name] = District.new({:name => name}, self)
-     end
+      districts[name] = District.new({:name => name}, self)
+    end
   end
+
+  # def create_districts
+  #   all_names = []
+  #   enrollment_repository.enrollments.keys.each do |name|
+  #     all_names << name
+  #   end
+  #   statewide_test_repository.statewide_tests.each do |name|
+  #     all_names << name
+  #   end
+  #   economic_profile_repository.economic_profiles.each do |name|
+  #     all_names << name
+  #   end
+  #   all_names.each do |name|
+  #     if find_by_name(name).nil?
+  #      districts[name] = District.new({:name => name}, self)
+  #    end
+  #  end
+  # end
 
   def find_by_name(district_name)
     districts[district_name]
@@ -56,16 +74,16 @@ class DistrictRepository
     end
   end
 
+  def get_all_district_names
+    enrollment_repository.enrollments.keys
+  end
+
   def find_enrollment(name)
     enrollment_repository.enrollments[name]
   end
 
   def repositories
     {:enrollment => enrollment_repository}
-  end
-
-  def get_all_district_names
-    enrollment_repository.enrollments.keys
   end
 
   def find_statewide_test(name)
