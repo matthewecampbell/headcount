@@ -27,17 +27,17 @@ class EconomicProfile
   def children_in_poverty_in_year(year)
     children_in_poverty = attributes[:children_in_poverty]
     raise UnknownDataError if children_in_poverty[year].nil?
-    children_in_poverty[year][:percentage]
+    children_in_poverty[year]
   end
 
   def free_or_reduced_price_lunch_percentage_in_year(year)
-    lunch_percentage = attributes[:free_or_reduced_price_lunch]
+    lunch_percentage = attributes[:free_and_reduced_price_lunch_rate]
     raise UnknownDataError if lunch_percentage[year].nil?
     truncate_float(lunch_percentage[year][:percentage])
   end
 
   def free_or_reduced_price_lunch_number_in_year(year)
-    lunch_number = attributes[:free_or_reduced_price_lunch]
+    lunch_number = attributes[:free_and_reduced_price_lunch_rate]
     raise UnknownDataError if lunch_number[year].nil?
     lunch_number[year][:total]
   end

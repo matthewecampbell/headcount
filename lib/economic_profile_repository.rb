@@ -2,9 +2,11 @@ require 'csv'
 require_relative 'economic_profile'
 require_relative 'calc'
 require_relative 'result_set'
+require_relative 'data_parser'
 
 class EconomicProfileRepository
     include Calc
+    include DataParser
   attr_reader :data_types, :economic_profiles, :result_set
 
   def initialize(economic_profiles = {})
@@ -12,7 +14,7 @@ class EconomicProfileRepository
     @data_types =   {
       :median_household_income => :median_household_income,
       :children_in_poverty => :children_in_poverty,
-      :free_or_reduced_price_lunch => :free_or_reduced_price_lunch,
+      :free_and_reduced_price_lunch_rate => :free_and_reduced_price_lunch_rate,
       :title_i => :title_i
       }
   end

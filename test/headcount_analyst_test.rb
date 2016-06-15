@@ -5,6 +5,24 @@ require_relative '../lib/enrollment'
 require_relative '../lib/district'
 
 class HeadcountAnalystTest < Minitest::Test
+  attr_reader :dr, :ha
+
+  def setup
+    @dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./data/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./data/High school graduation rates.csv"
+      },
+      :economic_profile => {
+        :median_household_income => "./data/Median household income.csv",
+        :children_in_poverty => "./data/School-aged children in poverty.csv",
+        :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
+        :title_i => "./data/Title I students.csv"
+      }
+    })
+    @ha = HeadcountAnalyst.new(dr)
+  end
 
   def test_kindergarten_participation_rate_variation_against_state
     dr = DistrictRepository.new

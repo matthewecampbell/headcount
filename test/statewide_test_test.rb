@@ -4,7 +4,7 @@ require_relative '../lib/statewide_test_repository'
 require_relative '../lib/errors'
 
 class StatewideTestTest < Minitest::Test
-  attr_reader :data
+  attr_reader :data, :str, :st
 
   def setup
     @data = {
@@ -16,13 +16,13 @@ class StatewideTestTest < Minitest::Test
         :writing => "./data/Average proficiency on the CSAP_TCAP by race_ethnicity_ Writing.csv"
       }
     }
+
+    @str = StatewideTestRepository.new
+    str.load_data(data)
+    @st = str.find_by_name("ACADEMY 20")
   end
 
   def test_proficient_by_grade
-    str = StatewideTestRepository.new
-    str.load_data(data)
-    st = str.find_by_name("ACADEMY 20")
-
     results = { 2008 => {:math => 0.857, :reading => 0.866, :writing => 0.671},
      2009 => {:math => 0.824, :reading => 0.862, :writing => 0.706},
      2010 => {:math => 0.849, :reading => 0.864, :writing => 0.662},
@@ -39,10 +39,6 @@ class StatewideTestTest < Minitest::Test
   end
 
   def test_proficient_by_race_or_ethnicity
-    str = StatewideTestRepository.new
-    str.load_data(data)
-    st = str.find_by_name("ACADEMY 20")
-
     results = { 2011 => {math: 0.816, reading: 0.897, writing: 0.826},
      2012 => {math: 0.818, reading: 0.893, writing: 0.808},
      2013 => {math: 0.805, reading: 0.901, writing: 0.810},
@@ -56,10 +52,6 @@ class StatewideTestTest < Minitest::Test
   end
 
   def test_proficient_for_subject_by_grade_in_year
-    str = StatewideTestRepository.new
-    str.load_data(data)
-    st = str.find_by_name("ACADEMY 20")
-
     assert_equal 0.857, st.proficient_for_subject_by_grade_in_year(:math, 3, 2008)
     assert_raises(UnknownDataError) do
       st.proficient_for_subject_by_grade_in_year(:astrophysics, 3, 2020)
@@ -67,10 +59,6 @@ class StatewideTestTest < Minitest::Test
   end
 
   def test_proficient_for_subject_by_race_in_year
-    str = StatewideTestRepository.new
-    str.load_data(data)
-    st = str.find_by_name("ACADEMY 20")
-
     assert_equal 0.818, st.proficient_for_subject_by_race_in_year(:math, :asian, 2012)
     assert_raises(UnknownDataError) do
       st.proficient_for_subject_by_race_in_year(:math, 5, 2008)
