@@ -52,9 +52,14 @@ module DataParser
     number
   end
 
+  def find_enrollment_percent(row)
+    row[:data].to_f
+  end
+
   def find_percent(row)
     percent = "N/A"
     percent = truncate_float(row[:data].to_f) if row[:data] != "N/A"
+    percent = row[:data].to_i if row[:data] == 1
     percent
   end
 
@@ -82,6 +87,26 @@ module DataParser
     data_types.values[index]
   end
 
+  def find_enrollment_grade(grade_levels, index)
+    grade_levels.values[index]
+  end
+
+  def create_enrollment_object(object, name, grade, year, percent)
+    enrollment_attributes = {:name => name, grade => {year => percent}}
+    if object == nil
+      enrollments[name] = Enrollment.new(enrollment_attributes)
+    else
+      add_data(object, grade, year, percent)
+    end
+  end
+
+  def add_enrollment_data(object, grade, year, percent)
+    if grade == :kindergarten_participation
+      object.kindergarten_participation.merge!({year => percent})
+    else
+      object.high_school_graduation.merge!({year => percent})
+    end
+  end
 
   def create_statewide_object(name, category, year, subject, percent, object)
     unless object
@@ -92,18 +117,18 @@ module DataParser
     end
   end
 
-  def create_economic_income_object(object, name, data_type, year, income)
+  def create_econ_or_title_income_object(object, name, data_type, year, data)
     unless object
-      input = {:name => name, data_type => {year => income}}
+      input = {:name => name, data_type => {year => data}}
       economic_profiles[name] = EconomicProfile.new(input)
     else
-      add_economic_data(object, data_type, year, income)
+      add_economic_or_title_data(object, data_type, year, data)
     end
   end
 
   def create_poverty_object(object, name, year, data_format, number, data_type)
     if object == nil
-    economic_profiles[name] = EconomicProfile.new({:name => name, data_type  =>{year => {data_format => number}}})
+    economic_profiles[name] = EconomicProfile.new({:name => name, data_type  => {year => {data_format => number}}})
     else
       add_poverty_data(object, data_type, year, data_format, number)
     end
@@ -149,13 +174,13 @@ module DataParser
     object.attributes[category][year] = data
   end
 
-  def add_income_data_to_object(object, category, year, data)
-    if object_category_exists?(object, category)
-      add_year_data(object, category, year, data)
-    elsif object_year_exists?(object, category, year)
-      add_data_to_year(object, category, year, data)
+  def add_income_or_title_data_to_object(object, data_type, year, data)
+    if object_data_type_exists?(object, data_type)
+      add_year_data(object, data_type, year, data)
+    elsif object_year_exists?(object, data_type, year)
+      add_data_to_year(object, data_type, year, data)
     else
-      add_data_to_year(object, category, year, data)
+      add_data_to_year(object, data_type, year, data)
     end
   end
 
@@ -170,4 +195,17 @@ module DataParser
       add_number_or_percent(object, data_type, year, data_format, number)
     end
   end
+
+  def determine_read_path(data, filepath, index)
+    if filepath.include?("income")
+      read_income_file(data, filepath, index)
+    elsif filepath.include?("poverty")
+      read_poverty_and_lunch_file(data, filepath, index)
+    elsif filepath.include?("lunch")
+      read_poverty_and_lunch_file(data, filepath, index)
+    elsif filepath.include?("Title")
+      read_title_file(data, filepath, index)
+    end
+  end
+
 end
