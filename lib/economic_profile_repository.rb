@@ -14,7 +14,7 @@ class EconomicProfileRepository
     @data_types =   {
       :median_household_income => :median_household_income,
       :children_in_poverty => :children_in_poverty,
-      :free_and_reduced_price_lunch_rate => :free_and_reduced_price_lunch_rate,
+      :free_or_reduced_price_lunch => :free_or_reduced_price_lunch,
       :title_i => :title_i
       }
   end
@@ -67,7 +67,6 @@ class EconomicProfileRepository
   end
 
   def read_title_file(data, filepath, index)
-    #refactor
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
       name        = find_name(row).upcase
       year        = find_year(row)

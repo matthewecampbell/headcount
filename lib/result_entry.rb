@@ -5,8 +5,8 @@ attr_reader :attributes
     @attributes = attributes
   end
 
-  def free_and_reduced_price_lunch_rate
-    attributes[:free_and_reduced_price_lunch_rate]
+  def free_or_reduced_price_lunch
+    attributes[:free_or_reduced_price_lunch]
   end
 
   def children_in_poverty_rate

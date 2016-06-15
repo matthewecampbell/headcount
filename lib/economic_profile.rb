@@ -31,13 +31,13 @@ class EconomicProfile
   end
 
   def free_or_reduced_price_lunch_percentage_in_year(year)
-    lunch_percentage = attributes[:free_and_reduced_price_lunch_rate]
+    lunch_percentage = attributes[:free_or_reduced_price_lunch]
     raise UnknownDataError if lunch_percentage[year].nil?
     truncate_float(lunch_percentage[year][:percentage])
   end
 
   def free_or_reduced_price_lunch_number_in_year(year)
-    lunch_number = attributes[:free_and_reduced_price_lunch_rate]
+    lunch_number = attributes[:free_or_reduced_price_lunch]
     raise UnknownDataError if lunch_number[year].nil?
     lunch_number[year][:total]
   end
