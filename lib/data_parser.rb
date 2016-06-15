@@ -40,6 +40,12 @@ module DataParser
     percent
   end
 
+  def find_income(row)
+    income = "N/A"
+    income = row[:data].to_i if row[:data] != "N/A"
+    income
+  end
+
   def find_grade(index)
     test_results.values[index]
   end
@@ -68,6 +74,15 @@ module DataParser
     end
   end
 
+  def create_economic_object(object, name, data_type, year, income)
+    unless object
+      input = {:name => name, data_type => {year => income}}
+      economic_profiles[name] = EconomicProfile.new(input)
+    else
+      add_economic_data(object, data_type, year, income)
+    end
+  end
+
   def object_category_exists?(object, category)
     object.attributes[category].nil?
   end
@@ -80,8 +95,8 @@ module DataParser
     object.attributes[category][year].nil?
   end
 
-  def add_subject_and_percent(object, category, year, subject, percent)
-    object.attributes[category][year] = { subject => percent }
+  def add_subject_and_data(object, category, year, subject, data)
+    object.attributes[category][year] = { subject => data }
   end
 
   def add_percent(object, category, year, subject, percent)

@@ -32,27 +32,23 @@ class EconomicProfileRepository
   def read_income_file(data, filepath, index)
     #refactor
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
-      name = row[:location].upcase
-      year = row[:timeframe].split("-").map { |num| num.to_i }
-      income = "N/A"
-      income = row[:data].to_i if row[:data] != "N/A"
-      data_type = data_types.values[index]
-      economic_profiles_object = find_by_name(name)
-      if economic_profiles_object == nil
-      economic_profiles[name] = EconomicProfile.new({:name => name, data_type => {year => income}})
-      else
-        add_economic_data(economic_profiles_object, data_type, year, income)
-      end
+      name        = find_name(row).upcase
+      year        = find_year_collection(row)
+      income      = find_income(row)
+      data_type   = find_data_types(data_types, index)
+      object      = find_by_name(name)
+
+      create_economic_object(object, name, data_type, year, income)
     end
   end
 
-  def add_economic_data(economic_profile_object, data_type, year, income)
-    if economic_profile_object.attributes[data_type].nil?
-      economic_profile_object.attributes[data_type] = {year => income}
-    elsif economic_profile_object.attributes[data_type][year].nil?
-      economic_profile_object.attributes[data_type][year] = income
+  def add_economic_data(object, category, year, data)
+    if object_category_exists?(object, category)
+      object.attributes[category] = {year => data}
+    elsif object.attributes[category][year].nil?
+      object.attributes[category][year] = data
     else
-      economic_profile_object.attributes[data_type][year] = income
+      object.attributes[category][year] = data
     end
   end
 
@@ -74,24 +70,24 @@ class EconomicProfileRepository
       number = row[:data].to_i if row[:data] != "N/A"
       end
       data_type = data_types.values[index]
-      economic_profiles_object = find_by_name(name)
-      if economic_profiles_object == nil
+      object = find_by_name(name)
+      if object == nil
       economic_profiles[name] = EconomicProfile.new({:name => name, data_type  =>{year => {data_format => number}}})
       else
-        add_poverty_data(economic_profiles_object, data_type, year, data_format, number)
+        add_poverty_data(object, data_type, year, data_format, number)
       end
     end
   end
 
-  def add_poverty_data(economic_profile_object, data_type, year, data_format, number)
-    if economic_profile_object.attributes[data_type].nil?
-      economic_profile_object.attributes[data_type] = {year => {data_format => number}}
-    elsif economic_profile_object.attributes[data_type][year].nil?
-      economic_profile_object.attributes[data_type][year] = {data_format => number}
-    elsif economic_profile_object.attributes[data_type][year][data_format].nil?
-      economic_profile_object.attributes[data_type][year][data_format] =  number
+  def add_poverty_data(object, data_type, year, data_format, number)
+    if object.attributes[data_type].nil?
+      object.attributes[data_type] = {year => {data_format => number}}
+    elsif object.attributes[data_type][year].nil?
+      object.attributes[data_type][year] = {data_format => number}
+    elsif object.attributes[data_type][year][data_format].nil?
+      object.attributes[data_type][year][data_format] =  number
     else
-      economic_profile_object.attributes[data_type][year][data_format] = number
+      object.attributes[data_type][year][data_format] = number
     end
   end
 
@@ -112,24 +108,24 @@ class EconomicProfileRepository
         number = row[:data].to_i if row[:data] != "N/A"
       end
       data_type = data_types.values[index]
-      economic_profiles_object = find_by_name(name)
-      if economic_profiles_object == nil
+      object = find_by_name(name)
+      if object == nil
         economic_profiles[name] = EconomicProfile.new({:name => name, data_type => {year => {data_format =>  number}}})
       else
-        add_lunch_data(economic_profiles_object, data_type, year, data_format, number)
+        add_lunch_data(object, data_type, year, data_format, number)
       end
     end
   end
 
-  def add_lunch_data(economic_profile_object, data_type, year, data_format, number)
-    if economic_profile_object.attributes[data_type].nil?
-      economic_profile_object.attributes[data_type] = {year => {data_format => year}}
-    elsif economic_profile_object.attributes[data_type][year].nil?
-      economic_profile_object.attributes[data_type][year] = {data_format => year}
-    elsif economic_profile_object.attributes[data_type][year][data_format].nil?
-      economic_profile_object.attributes[data_type][year][data_format] =  number
+  def add_lunch_data(object, data_type, year, data_format, number)
+    if object.attributes[data_type].nil?
+      object.attributes[data_type] = {year => {data_format => year}}
+    elsif object.attributes[data_type][year].nil?
+      object.attributes[data_type][year] = {data_format => year}
+    elsif object.attributes[data_type][year][data_format].nil?
+      object.attributes[data_type][year][data_format] =  number
     else
-      economic_profile_object.attributes[data_type][year][data_format] = number
+      object.attributes[data_type][year][data_format] = number
     end
   end
 
@@ -142,22 +138,22 @@ class EconomicProfileRepository
       percent = row[:data].to_f if row[:data] != "N/A"
       percent = row[:data].to_i if row[:data] == 1
       data_type = data_types.values[index]
-      economic_profiles_object = find_by_name(name)
-      if economic_profiles_object == nil
+      object = find_by_name(name)
+      if object == nil
         economic_profiles[name] = EconomicProfile.new({:name => name, data_type => {year => percent}})
       else
-        add_title_data(economic_profiles_object, data_type, year, percent)
+        add_title_data(object, data_type, year, percent)
       end
     end
   end
 
-  def add_title_data(economic_profile_object, data_type, year, percent)
-    if economic_profile_object.attributes[data_type].nil?
-      economic_profile_object.attributes[data_type] = {year => percent}
-    elsif economic_profile_object.attributes[data_type][year].nil?
-      economic_profile_object.attributes[data_type][year] = percent
+  def add_title_data(object, data_type, year, percent)
+    if object.attributes[data_type].nil?
+      object.attributes[data_type] = {year => percent}
+    elsif object.attributes[data_type][year].nil?
+      object.attributes[data_type][year] = percent
     else
-      economic_profile_object.attributes[data_type][year] = percent
+      object.attributes[data_type][year] = percent
     end
   end
 
