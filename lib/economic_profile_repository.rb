@@ -14,7 +14,7 @@ class EconomicProfileRepository
     @data_types =   {
       :median_household_income => :median_household_income,
       :children_in_poverty => :children_in_poverty,
-      :free_or_reduced_price_lunch => :free_or_reduced_price_lunch,
+      :free_and_reduced_price_lunch_rate => :free_and_reduced_price_lunch_rate,
       :title_i => :title_i
       }
   end

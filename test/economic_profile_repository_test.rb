@@ -26,6 +26,6 @@ class EconomicProfileRepositoryTest < Minitest::Test
   def test_it_loads_files
     result = {:total=>279275, :percentage=>0.068}
 
-    assert_equal result, epr.economic_profiles["COLORADO"].attributes[:free_or_reduced_price_lunch][2010]
+    assert_equal result, epr.economic_profiles["COLORADO"].attributes[:free_and_reduced_price_lunch_rate][2010]
   end
 end

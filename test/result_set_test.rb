@@ -4,10 +4,10 @@ require_relative '../lib/result_set'
 class ResultSetTest < Minitest::Test
 
   def test_free_and_reduced_price_lunch
-    r1 = ResultEntry.new({free_or_reduced_price_lunch_rate: 0.5,
+    r1 = ResultEntry.new({free_and_reduced_price_lunch_rate: 0.5,
         children_in_poverty_rate: 0.25,
         high_school_graduation_rate: 0.75})
-    r2 = ResultEntry.new({free_or_reduced_price_lunch_rate: 0.3,
+    r2 = ResultEntry.new({free_and_reduced_price_lunch_rate: 0.3,
         children_in_poverty_rate: 0.2,
         high_school_graduation_rate: 0.6})
 

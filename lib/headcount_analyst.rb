@@ -195,7 +195,7 @@ class HeadcountAnalyst
   def students_qualifying_for_lunch?(district)
     # free_and_reduced_price_lunch
     percentages = []
-    percentage = district.economic_profile.attributes[:free_or_reduced_price_lunch].values.map do |hash|
+    percentage = district.economic_profile.attributes[:free_and_reduced_price_lunch_rate].values.map do |hash|
       if hash[:percentage].is_a?(Float)
       percentages << hash[:percentage]
       end
@@ -208,7 +208,7 @@ class HeadcountAnalyst
     percentages = []
     dr.districts.keys.each do |district_name|
       district = dr.find_by_name(district_name)
-      district.economic_profile.attributes[:free_or_reduced_price_lunch].values.map do |hash|
+      district.economic_profile.attributes[:free_and_reduced_price_lunch_rate].values.map do |hash|
         if hash[:percentage].is_a?(Float)
           percentages  << hash[:percentage]
         end
