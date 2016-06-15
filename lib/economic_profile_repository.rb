@@ -2,7 +2,6 @@ require 'csv'
 require_relative 'economic_profile'
 require_relative 'calc'
 require_relative 'result_set'
-require_relative 'data_parser'
 
 class EconomicProfileRepository
     include Calc
@@ -20,16 +19,23 @@ class EconomicProfileRepository
   end
 
   def load_data(data)
-    load_file_data(data)
+    data.values[0].values.each_with_index do |filepath, index|
+    read_file(data, filepath, index)
+    end
+  end
+
+  def read_file(data, filepath, index)
+    check_loadpath(data, filepath, index)
   end
 
   def read_income_file(data, filepath, index)
+    #refactor
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
-      name              = find_name(row)
-      year_collection   = find_year_collection(row)
-      income            = find_income(row)
-      data_type         = find_data_types(data_types, index)
-      binding.pry
+      name = row[:location].upcase
+      year = row[:timeframe].split("-").map { |num| num.to_i }
+      income = "N/A"
+      income = row[:data].to_i if row[:data] != "N/A"
+      data_type = data_types.values[index]
       economic_profiles_object = find_by_name(name)
       if economic_profiles_object == nil
       economic_profiles[name] = EconomicProfile.new({:name => name, data_type => {year => income}})
