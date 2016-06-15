@@ -2,6 +2,7 @@ require 'csv'
 require_relative 'economic_profile'
 require_relative 'calc'
 require_relative 'result_set'
+require_relative 'data_parser'
 
 class EconomicProfileRepository
     include Calc

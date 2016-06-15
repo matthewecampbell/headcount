@@ -18,11 +18,11 @@ module DataParser
     row[:location]
   end
 
-  def find_subject_by_grade(row)
+  def find_sub_grade(row)
     row[:score].downcase.to_sym
   end
 
-  def find_subject_by_race(data, index)
+  def find_sub_race(data, index)
     data.values[0].keys[index].to_sym
   end
 
@@ -61,7 +61,8 @@ module DataParser
 
   def create_statewide_object(name, category, year, subject, percent, object)
     unless object
-      statewide_tests[name] = StatewideTest.new({:name => name, category=> {year => {subject => percent}}})
+      input = {:name => name, category=> {year => {subject => percent}}}
+      statewide_tests[name] = StatewideTest.new(input)
     else
       add_data(object, category, year, subject, percent)
     end

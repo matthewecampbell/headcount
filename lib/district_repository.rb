@@ -19,22 +19,34 @@ class DistrictRepository
   end
 
   def load_data(data)
+    sort_enrollment(data)
+    sort_statewide_testing(data)
+    sort_economic_profile(data)
+    create_districts
+  end
+
+  def sort_enrollment(data)
     if data.keys.include?(:enrollment)
       enrollment_data = {}
       enrollment_data[data.first[0]] = data.first[1]
       enrollment_repository.load_data(enrollment_data)
     end
+  end
+
+  def sort_statewide_testing(data)
     if data.keys.include?(:statewide_testing)
       statewide_testing_data = {}
       statewide_testing_data[:statewide_testing] = data[:statewide_testing]
       statewide_test_repository.load_data(statewide_testing_data)
     end
+  end
+
+  def sort_economic_profile(data)
     if data.keys.include?(:economic_profile)
       economic_profile_data = {}
       economic_profile_data[:economic_profile] = data[:economic_profile]
       economic_profile_repository.load_data(economic_profile_data)
     end
-    create_districts
   end
 
   def create_districts
@@ -42,24 +54,6 @@ class DistrictRepository
       districts[name] = District.new({:name => name}, self)
     end
   end
-
-  # def create_districts
-  #   all_names = []
-  #   enrollment_repository.enrollments.keys.each do |name|
-  #     all_names << name
-  #   end
-  #   statewide_test_repository.statewide_tests.each do |name|
-  #     all_names << name
-  #   end
-  #   economic_profile_repository.economic_profiles.each do |name|
-  #     all_names << name
-  #   end
-  #   all_names.each do |name|
-  #     if find_by_name(name).nil?
-  #      districts[name] = District.new({:name => name}, self)
-  #    end
-  #  end
-  # end
 
   def find_by_name(district_name)
     districts[district_name]

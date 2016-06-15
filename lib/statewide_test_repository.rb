@@ -32,12 +32,12 @@ class StatewideTestRepository
     CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
       name               = find_name(row).upcase
       grade              = find_grade(index)
-      subject_by_grade   = find_subject_by_grade(row)
+      sub_grade          = find_sub_grade(row)
       year               = find_year(row)
       percent            = find_percent(row)
       object             = find_by_name(name)
 
-      create_statewide_object(name, grade, year, subject_by_grade, percent, object)
+      create_statewide_object(name, grade, year, sub_grade, percent, object)
     end
   end
 
@@ -47,10 +47,10 @@ class StatewideTestRepository
       ethnicity       = find_ethnicity(row)
       year            = find_year(row)
       percent         = find_percent(row)
-      subject_by_race = find_subject_by_race(data, index)
+      sub_race        = find_sub_race(data, index)
       object          = find_by_name(name)
 
-      create_statewide_object(name, ethnicity, year, subject_by_race, percent, object)
+      create_statewide_object(name, ethnicity, year, sub_race, percent, object)
     end
   end
 
@@ -68,5 +68,5 @@ class StatewideTestRepository
     statewide_tests[district_name]
   end
 
-  
+
 end
