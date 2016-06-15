@@ -54,13 +54,13 @@ class StatewideTestRepository
     end
   end
 
-  def add_data(object, category, year, subject, percent)
+  def add_data(object, category, year, subject, data)
     if object_category_exists?(object, category)
-      add_year_subject_percent(object, category, year, subject, percent)
+      add_year_subject_data(object, category, year, subject, data)
     elsif object_year_exists?(object, category, year)
-      add_subject_and_percent(object, category, year, subject, percent)
+      add_subject_and_data(object, category, year, subject, data)
     else
-      add_percent(object, category, year, subject, percent)
+      add_number_or_percent(object, category, year, subject, data)
     end
   end
 

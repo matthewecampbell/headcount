@@ -108,13 +108,13 @@ class HeadcountAnalyst
       check_2 = children_in_poverty?(district)
       check_3 = graduation_rate?(district)
       if check_1 && check_2 && check_3
-        matching_districts << ResultEntry.new({name: district_name, free_or_reduced_price_lunch:
+        matching_districts << ResultEntry.new({name: district_name, free_and_reduced_price_lunch_rate:
           @dist_average, children_in_poverty_rate: @poverty_average,
           high_school_graduation_rate: @grad_average})
         end
       end
     end
-    statewide_result = ResultEntry.new({name: "COLORADO", free_or_reduced_price_lunch:
+    statewide_result = ResultEntry.new({name: "COLORADO", free_and_reduced_price_lunch_rate:
       @s_lunch, children_in_poverty_rate: @s_poverty,
       high_school_graduation_rate: @s_grad})
     high_poverty_and_grad_result = ResultSet.new(matching_districts: matching_districts,statewide_average: statewide_result)
