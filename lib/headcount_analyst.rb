@@ -1,8 +1,8 @@
 require_relative 'calc'
 
 class HeadcountAnalyst
-    include Calc
-  attr_reader     :dr
+  include Calc
+  attr_reader    :dr
 
   def initialize(dr)
     @dr = dr
@@ -95,10 +95,9 @@ class HeadcountAnalyst
 
   def calculate_statewide_data(results)
     total = results.count
-    counter = 0
-    results.each { |result| counter += 1 if result == true }
+    counter = results.count { |result| result == true }
     percentage = truncate_float(counter/ total.to_f)
-    thing = percentage >= 0.7 ? true : false
+    percentage >= 0.7 ? true : false
   end
 
   def high_poverty_and_high_school_graduation
@@ -191,10 +190,7 @@ class HeadcountAnalyst
   end
 
   def tally_results(results)
-    counter = 0
-    results.each do |result|
-      counter += 1 if result == true
-    end
+    counter = results.count {|result| result == true}
     counter/results.count > 0.70
   end
 
@@ -225,7 +221,7 @@ class HeadcountAnalyst
   def students_qualifying_for_lunch?(district)
     percentages = []
     fl = district.economic_profile.attributes[:free_or_reduced_price_lunch]
-    percentage = fl.values.map do |free_lunch_data|
+    percentage = fl.values.each do |free_lunch_data|
       if free_lunch_data[:percentage].is_a?(Float)
       percentages << free_lunch_data[:percentage]
       end
@@ -255,7 +251,7 @@ class HeadcountAnalyst
   def children_in_poverty?(district)
     percentages = []
     poverty = district.economic_profile.attributes[:children_in_poverty]
-    percentage = poverty.values.map do |hash|
+    percentage = poverty.values.each do |hash|
       if hash[:percentage].is_a?(Float)
       percentages << hash[:percentage]
     end
@@ -276,7 +272,7 @@ class HeadcountAnalyst
     if district_name != "COLORADO"
       district = dr.find_by_name(district_name)
       poverty_data = district.economic_profile.attributes[:children_in_poverty]
-      poverty_data.values.map do |poverty|
+      poverty_data.values.each do |poverty|
       get_statewide_poverty_percentages(poverty, percentages)
       end
     end

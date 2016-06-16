@@ -5,7 +5,8 @@ require_relative '../lib/enrollment'
 require_relative '../lib/district'
 
 class HeadcountAnalystTest < Minitest::Test
-  attr_reader :dr, :ha
+  attr_reader :dr,
+              :ha
 
   def setup
     @dr = DistrictRepository.new

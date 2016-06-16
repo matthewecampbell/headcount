@@ -3,16 +3,19 @@ require_relative 'finder'
 
 class StatewideTest
   include Finder
-  attr_reader :attributes, :name, :grade_levels, :error
+  attr_reader :attributes,
+              :name,
+              :grade_levels,
+              :error
 
   def initialize(attributes)
-    @attributes = attributes
-    @name = attributes[:name]
+    @attributes   = attributes
+    @name         = attributes[:name]
+    @error        = UnknownDataError
     @grade_levels =   {
       3 => :third_grade,
       8 => :eighth_grade
     }
-    @error = UnknownDataError
   end
 
   def proficient_by_grade(grade)

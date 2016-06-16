@@ -2,7 +2,9 @@ require_relative 'test_helper'
 require_relative '../lib/result_set'
 
 class ResultSetTest < Minitest::Test
-  attr_reader :r1, :r2, :rs
+  attr_reader :r1,
+              :r2,
+              :rs
 
    def setup
      @r1 = ResultEntry.new({free_or_reduced_price_lunch: 0.5,

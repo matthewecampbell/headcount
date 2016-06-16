@@ -2,8 +2,8 @@ require_relative 'errors'
 require_relative 'calc'
 
 class EconomicProfile
-    include Calc
-  attr_reader :attributes
+  include Calc
+  attr_reader   :attributes
 
   def initialize(attributes)
     @attributes = attributes
@@ -11,7 +11,7 @@ class EconomicProfile
 
   def median_household_income_in_year(year)
     total = []
-    attributes[:median_household_income].keys.map do |key|
+    attributes[:median_household_income].keys.each do |key|
       if year.between?(key[0], key[1])
         total << attributes[:median_household_income][key]
      end

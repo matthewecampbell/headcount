@@ -12,9 +12,9 @@ class DistrictRepository
               :economic_profile_repository
 
   def initialize(districts = {})
-    @districts = districts
-    @enrollment_repository = EnrollmentRepository.new
-    @statewide_test_repository = StatewideTestRepository.new
+    @districts                   = districts
+    @enrollment_repository       = EnrollmentRepository.new
+    @statewide_test_repository   = StatewideTestRepository.new
     @economic_profile_repository = EconomicProfileRepository.new
   end
 

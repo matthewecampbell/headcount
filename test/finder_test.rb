@@ -5,7 +5,9 @@ require_relative '../lib/statewide_test_repository'
 
 class FinderTest < Minitest::Test
   include Finder
-  attr_reader :data, :str, :st
+  attr_reader :data,
+              :str,
+              :st
 
   def setup
     @data = {

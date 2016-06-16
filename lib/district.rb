@@ -1,9 +1,10 @@
 class District
-  attr_reader :attributes, :dr
+  attr_reader :attributes,
+              :dr
 
   def initialize(attributes, dr = nil)
     @attributes = attributes
-    @dr = dr
+    @dr         = dr
   end
 
   def name
