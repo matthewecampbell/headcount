@@ -1,7 +1,7 @@
 {
   "Unit Tests": {
     "coverage": {
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/calc.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/calc.rb": [
         1,
         null,
         1,
@@ -11,7 +11,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/data_parser_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/data_parser_test.rb": [
         1,
         1,
         1,
@@ -68,7 +68,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/finder.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/finder.rb": [
         1,
         null,
         1,
@@ -108,7 +108,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/enrollment_repository.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/enrollment_repository.rb": [
         1,
         1,
         1,
@@ -130,34 +130,34 @@
         null,
         null,
         1,
-        31,
-        55,
+        32,
+        57,
         null,
         null,
         null,
         1,
-        55,
-        83441,
-        83441,
-        83441,
-        83441,
-        83441,
+        57,
+        86337,
+        86337,
+        86337,
+        86337,
+        86337,
         null,
-        83441,
+        86337,
         null,
-        null,
-        null,
-        1,
-        77830,
         null,
         null,
         1,
-        83455,
+        80545,
+        null,
+        null,
+        1,
+        86352,
         null,
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/enrollment.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/enrollment.rb": [
         1,
         null,
         1,
@@ -166,8 +166,8 @@
         null,
         null,
         1,
-        5626,
-        5626,
+        5805,
+        5805,
         null,
         null,
         1,
@@ -181,7 +181,7 @@
         null,
         null,
         1,
-        56111,
+        57921,
         null,
         null,
         1,
@@ -195,18 +195,18 @@
         null,
         null,
         1,
-        21721,
-        17377,
+        22626,
+        18101,
         null,
-        4344,
+        4525,
         null,
         null,
         1,
-        21722,
+        22627,
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/data_parser.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/data_parser.rb": [
         1,
         null,
         1,
@@ -224,7 +224,7 @@
         null,
         null,
         1,
-        1258416,
+        1261312,
         null,
         null,
         1,
@@ -236,7 +236,7 @@
         null,
         null,
         1,
-        1233981,
+        1236877,
         null,
         null,
         1,
@@ -262,7 +262,7 @@
         null,
         null,
         1,
-        83442,
+        86338,
         null,
         null,
         1,
@@ -297,23 +297,23 @@
         null,
         null,
         1,
-        83441,
+        86337,
         null,
         null,
         1,
-        83441,
-        83441,
-        5611,
+        86337,
+        86337,
+        5792,
         null,
-        77830,
+        80545,
         null,
         null,
         null,
         1,
-        77830,
-        56110,
+        80545,
+        57920,
         null,
-        21720,
+        22625,
         null,
         null,
         null,
@@ -420,7 +420,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/district_repository_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/district_repository_test.rb": [
         1,
         1,
         1,
@@ -487,7 +487,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/district_repository.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/district_repository.rb": [
         1,
         1,
         1,
@@ -580,7 +580,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/district.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/district.rb": [
         1,
         1,
         null,
@@ -608,7 +608,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/statewide_test_repository.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/statewide_test_repository.rb": [
         1,
         1,
         1,
@@ -683,7 +683,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/statewide_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/statewide_test.rb": [
         1,
         1,
         null,
@@ -727,7 +727,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/errors.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/errors.rb": [
         1,
         null,
         null,
@@ -736,7 +736,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/economic_profile_repository.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/economic_profile_repository.rb": [
         1,
         1,
         1,
@@ -823,7 +823,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/economic_profile.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/economic_profile.rb": [
         1,
         1,
         null,
@@ -875,7 +875,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/result_set.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/result_set.rb": [
         1,
         null,
         1,
@@ -888,7 +888,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/result_entry.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/result_entry.rb": [
         1,
         1,
         null,
@@ -917,7 +917,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/district_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/district_test.rb": [
         1,
         1,
         1,
@@ -1012,7 +1012,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/economic_profile_repository_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/economic_profile_repository_test.rb": [
         1,
         1,
         1,
@@ -1041,10 +1041,25 @@
         1,
         null,
         1,
+        1,
+        1,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        1,
+        1,
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/economic_profile_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/economic_profile_test.rb": [
         1,
         1,
         1,
@@ -1106,7 +1121,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/enrollment_repository_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/enrollment_repository_test.rb": [
         1,
         1,
         1,
@@ -1153,15 +1168,32 @@
         1,
         1,
         1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
         1,
         null,
         1,
         1,
+        1,
+        1,
+        1,
+        null,
         null,
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/enrollment_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/enrollment_test.rb": [
         1,
         1,
         null,
@@ -1218,7 +1250,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/errors_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/errors_test.rb": [
         1,
         1,
         null,
@@ -1238,7 +1270,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/finder_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/finder_test.rb": [
         1,
         1,
         1,
@@ -1310,7 +1342,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/headcount_analyst_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/headcount_analyst_test.rb": [
         1,
         1,
         1,
@@ -1421,7 +1453,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/lib/headcount_analyst.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/lib/headcount_analyst.rb": [
         1,
         null,
         1,
@@ -1721,7 +1753,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/result_entry_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/result_entry_test.rb": [
         1,
         1,
         1,
@@ -1767,7 +1799,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/result_set_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/result_set_test.rb": [
         1,
         1,
         null,
@@ -1810,7 +1842,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/statewide_test_repository_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/statewide_test_repository_test.rb": [
         1,
         1,
         null,
@@ -1841,10 +1873,26 @@
         1,
         null,
         1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/headcount/test/statewide_test_test.rb": [
+      "/Users/matthewcampbell/Desktop/turing/module 1/headcount/test/statewide_test_test.rb": [
         1,
         1,
         1,
@@ -1916,6 +1964,6 @@
         null
       ]
     },
-    "timestamp": 1466084355
+    "timestamp": 1466088897
   }
 }
