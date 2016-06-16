@@ -52,9 +52,9 @@ class EconomicProfileTest < Minitest::Test
   end
 
   def test_title_i_in_year
-      assert_equal 0.011, ep.title_i_in_year(2011)
-      assert_raises(UnknownDataError) do
-        ep.title_i_in_year(2020)
-      end
+    assert_equal 0.011, ep.title_i_in_year(2011)
+    assert_raises(UnknownDataError) do
+      ep.title_i_in_year(2020)
     end
+  end
 end

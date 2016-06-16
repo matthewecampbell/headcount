@@ -18,12 +18,12 @@ Starting with the CSV data we will:
 
 ##### Pair Project: Matt Campbell & Kris Sparks
 
-(ADD NOTES ABOUT PROGRESS, LEVEL OF COMPLETION ETC)
+Iterations 1-4 and 6 complete. All tests spec harness tests are passing. Iteration 5 spec harness test is not applicable, since we opted to complete 6 rather than 5. The output from rake sanitation:all shows zero complaints. The rake runs in about 30 seconds with zero errors, failures, or skips.
 
 ##### Learning Goals
 
-Use tests to drive both the design and implementation of code
-Decompose a large application into components such as parsers, repositories, and analysis tools
-Use test fixtures instead of actual data when testing
-Connect related objects together through references
-Learn an agile approach to building software
+* Use tests to drive both the design and implementation of code
+* Decompose a large application into components such as parsers, repositories, and analysis tools
+* Use test fixtures instead of actual data when testing
+* Connect related objects together through references
+* Learn an agile approach to building software

@@ -1,4 +1,4 @@
-  require_relative '../test/test_helper'
+require_relative '../test/test_helper'
 require_relative '../lib/headcount_analyst'
 require_relative '../lib/district_repository'
 require_relative '../lib/enrollment'
@@ -38,7 +38,7 @@ class HeadcountAnalystTest < Minitest::Test
   end
 
   def test_high_school_graduation_rate_variation_against_state
-      assert_equal 0.641, ha.kindergarten_participation_against_high_school_graduation('ACADEMY 20')
+    assert_equal 0.641, ha.kindergarten_participation_against_high_school_graduation('ACADEMY 20')
   end
 
 
@@ -48,29 +48,31 @@ class HeadcountAnalystTest < Minitest::Test
 
   def test_kindergarten_participation_correlates_with_high_school_graduation_statewide
     ha.make_results("ACADEMY 20", results = [])
+
     assert_instance_of Array, ha.make_results("ACADEMY 20", results = [])
     assert ha.tally_results(results)
     refute ha.kindergarten_participation_correlates_with_high_school_graduation(:for => 'STATEWIDE')
   end
 
   def test_can_get_all_district_names
-      assert_equal ["COLORADO", "ACADEMY 20", "ADAMS COUNTY 14"], dr.get_all_district_names[0..2]
-      assert_equal 181, dr.get_all_district_names.count
-    end
+    assert_equal ["COLORADO", "ACADEMY 20", "ADAMS COUNTY 14"], dr.get_all_district_names[0..2]
+    assert_equal 181, dr.get_all_district_names.count
+  end
 
   def test_can_get_subset_district_names
-      refute ha.kindergarten_participation_correlates_with_high_school_graduation(
-      :across => ['ACADEMY 20', 'PUEBLO CITY 60', 'AGATE 300', 'ADAMS COUNTY 14'])
+      refute ha.kindergarten_participation_correlates_with_high_school_graduation(:across => ['ACADEMY 20', 'PUEBLO CITY 60', 'AGATE 300', 'ADAMS COUNTY 14'])
   end
 
   def test_high_poverty_and_high_school_graduation
     dist = dr.find_by_name("ACADEMY 20")
-
     rs = ha.high_poverty_and_high_school_graduation
+
     assert_instance_of ResultSet, rs
     assert_instance_of Array, rs.matching_districts
     assert_equal 46, rs.matching_districts.count
+
     rs1 = ha.high_income_disparity
+
     assert_instance_of ResultSet, rs1
     refute ha.high_poverty_and_grad_check("ACADEMY 20")
     refute ha.students_qualifying_for_lunch?(dist)
