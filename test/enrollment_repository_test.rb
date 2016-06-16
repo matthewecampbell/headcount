@@ -33,4 +33,21 @@ class EnrollmentRepositoryTest < Minitest::Test
     assert_equal nil, er.find_by_name("Name_not_found")
   end
 
+  def test_it_populates_enrollments
+    e1 = Enrollment.new({:name => "Adams"})
+    e2 = Enrollment.new({:name => "WOODLAND PARK RE-2"})
+    er = EnrollmentRepository.new({"Adams" => e1, "WOODLAND PARK RE-2" => e2})
+
+    assert_equal ["Adams", "WOODLAND PARK RE-2"], er.enrollments.keys
+  end
+
+  def test_enrollments_holds_enrollment_data
+    e1 = Enrollment.new({:name => "Adams"})
+    e2 = Enrollment.new({:name => "WOODLAND PARK RE-2"})
+    er = EnrollmentRepository.new({"Adams" => e1, "WOODLAND PARK RE-2" => e2})
+
+    name = er.find_by_name("WOODLAND PARK RE-2")
+    assert_equal ({:name=>"WOODLAND PARK RE-2"}), name.attributes
+  end
+
 end

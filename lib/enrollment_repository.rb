@@ -23,14 +23,14 @@ class EnrollmentRepository
   end
 
   def read_file(data, filepath, index)
-      CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
-        name      = find_name(row).upcase
-        year      = find_year(row)
-        percent   = find_enrollment_percent(row)
-        grade     = find_enrollment_grade(grade_levels, index)
-        object    = find_by_name(name)
+    CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
+      name      = find_name(row).upcase
+      year      = find_year(row)
+      percent   = find_enrollment_percent(row)
+      grade     = find_enrollment_grade(grade_levels, index)
+      object    = find_by_name(name)
 
-        create_enrollment_object(object, name, grade, year, percent)
+    create_enrollment_object(object, name, grade, year, percent)
     end
   end
 
