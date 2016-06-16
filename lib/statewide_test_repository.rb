@@ -4,23 +4,24 @@ require_relative 'calc'
 require_relative 'data_parser'
 
 class StatewideTestRepository
-    include Calc
-    include DataParser
-  attr_reader :statewide_tests, :test_results
+  include Calc
+  include DataParser
+  attr_reader :statewide_tests,
+              :test_results
 
   def initialize(statewide_tests = {})
     @statewide_tests = statewide_tests
-    @test_results =   {
-      3 => :third_grade,
-      8 => :eighth_grade,
-     "ALL STUDENTS" => :all_students,
-     "ASIAN" => :asian,
-     "BLACK" => :black,
+    @test_results    =   {
+      3                          => :third_grade,
+      8                          => :eighth_grade,
+     "ALL STUDENTS"              => :all_students,
+     "ASIAN"                     => :asian,
+     "BLACK"                     => :black,
      "HAWAIIAN/PACIFIC ISLANDER" => :pacific_islander,
-     "HISPANIC" => :hispanic,
-     "NATIVE AMERICAN" => :native_american,
-     "TWO OR MORE" => :two_or_more,
-     "WHITE" => :white
+     "HISPANIC"                  => :hispanic,
+     "NATIVE AMERICAN"           => :native_american,
+     "TWO OR MORE"               => :two_or_more,
+     "WHITE"                     => :white
       }
   end
 

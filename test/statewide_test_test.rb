@@ -4,7 +4,9 @@ require_relative '../lib/statewide_test_repository'
 require_relative '../lib/errors'
 
 class StatewideTestTest < Minitest::Test
-  attr_reader :data, :str, :st
+  attr_reader :data,
+              :str,
+              :st
 
   def setup
     @data = {

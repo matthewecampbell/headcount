@@ -6,12 +6,14 @@ require_relative 'calc'
 class EnrollmentRepository
   include DataParser
   include Calc
-  attr_reader :enrollments, :grade_levels
+  attr_reader :enrollments,
+              :grade_levels
 
   def initialize(enrollments = {})
-    @enrollments = enrollments
-    @grade_levels =   {
-      :kindergarten => :kindergarten_participation,
+    @enrollments  = enrollments
+    @grade_levels =
+       {
+      :kindergarten           => :kindergarten_participation,
       :high_school_graduation => :high_school_graduation
      }
   end

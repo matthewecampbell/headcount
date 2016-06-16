@@ -5,17 +5,19 @@ require_relative 'result_set'
 require_relative 'data_parser'
 
 class EconomicProfileRepository
-    include Calc
-    include DataParser
-  attr_reader :data_types, :economic_profiles, :result_set
+  include Calc
+  include DataParser
+  attr_reader          :data_types,
+                       :economic_profiles,
+                       :result_set
 
   def initialize(economic_profiles = {})
     @economic_profiles = economic_profiles
-    @data_types =   {
-      :median_household_income => :median_household_income,
-      :children_in_poverty => :children_in_poverty,
+    @data_types        =   {
+      :median_household_income     => :median_household_income,
+      :children_in_poverty         => :children_in_poverty,
       :free_or_reduced_price_lunch => :free_or_reduced_price_lunch,
-      :title_i => :title_i
+      :title_i                     => :title_i
       }
   end
 

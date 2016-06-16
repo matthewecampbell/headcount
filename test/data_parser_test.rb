@@ -9,8 +9,8 @@ class DataParserTest < Minitest::Test
   def setup
     @er = EnrollmentRepository.new
     er.load_data({
-      :enrollment => {
-        :kindergarten => "./data/Kindergartners in full-day program.csv",
+      :enrollment               => {
+        :kindergarten           => "./data/Kindergartners in full-day program.csv",
         :high_school_graduation => "./data/High school graduation rates.csv"
       }
     })

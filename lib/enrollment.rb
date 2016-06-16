@@ -1,12 +1,13 @@
 require_relative 'calc'
 
 class Enrollment
-    include Calc
-  attr_reader :attributes, :name
+  include Calc
+  attr_reader :attributes,
+              :name
 
   def initialize(attributes)
     @attributes = attributes
-    @name = attributes[:name]
+    @name       = attributes[:name]
   end
 
   def kindergarten_participation_by_year

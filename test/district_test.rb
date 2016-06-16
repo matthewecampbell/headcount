@@ -7,10 +7,10 @@ class DistrictTest < Minitest::Test
 
   def setup
     @data = {
-      :enrollment => {
+      :enrollment     => {
         :kindergarten => "./data/Kindergartners in full-day program.csv"
       },
-      :economic_profile => {
+      :economic_profile  => {
         :median_household_income => "./data/Median household income.csv",
         :children_in_poverty => "./data/School-aged children in poverty.csv",
         :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",

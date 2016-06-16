@@ -4,7 +4,8 @@ require_relative '../lib/economic_profile_repository'
 require_relative '../lib/errors'
 
 class EconomicProfileTest < Minitest::Test
-  attr_reader :epr, :ep
+  attr_reader :epr,
+              :ep
 
   def setup
     @epr = EconomicProfileRepository.new
