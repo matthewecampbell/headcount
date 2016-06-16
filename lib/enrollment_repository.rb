@@ -23,7 +23,6 @@ class EnrollmentRepository
   end
 
   def read_file(data, filepath, index)
-    #refactor?
       CSV.foreach(filepath, headers: true, header_converters: :symbol) do |row|
         name      = find_name(row).upcase
         year      = find_year(row)

@@ -5,10 +5,10 @@ class ResultSetTest < Minitest::Test
   attr_reader :r1, :r2, :rs
 
    def setup
-     @r1 = ResultEntry.new({free_and_reduced_price_lunch_rate: 0.5,
+     @r1 = ResultEntry.new({free_or_reduced_price_lunch: 0.5,
          children_in_poverty_rate: 0.25,
          high_school_graduation_rate: 0.75})
-     @r2 = ResultEntry.new({free_and_reduced_price_lunch_rate: 0.3,
+     @r2 = ResultEntry.new({free_or_reduced_price_lunch: 0.3,
          children_in_poverty_rate: 0.2,
          high_school_graduation_rate: 0.6})
 
@@ -16,17 +16,17 @@ class ResultSetTest < Minitest::Test
    end
 
    def test_matching_districts
-     results = {:free_and_reduced_price_lunch_rate=>0.5, :children_in_poverty_rate=>0.25, :high_school_graduation_rate=>0.75}
+     results = {:free_or_reduced_price_lunch => 0.5, :children_in_poverty_rate => 0.25, :high_school_graduation_rate => 0.75}
      assert_equal results, rs.matching_districts[0].attributes
    end
 
    def test_statewide_average
-     results = {:free_and_reduced_price_lunch_rate=>0.3, :children_in_poverty_rate=>0.2, :high_school_graduation_rate=>0.6}
+     results = {:free_or_reduced_price_lunch => 0.3, :children_in_poverty_rate => 0.2, :high_school_graduation_rate => 0.6}
      assert_equal results, rs.statewide_average.attributes
    end
 
    def test_free_and_reduced_price_lunch
-     assert_equal 0.5, rs.matching_districts.first.free_and_reduced_price_lunch_rate
+     assert_equal 0.5, rs.matching_districts.first.free_or_reduced_price_lunch
    end
 
    def test_children_in_poverty_rate_statewide

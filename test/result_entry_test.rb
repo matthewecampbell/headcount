@@ -2,14 +2,14 @@ require_relative 'test_helper'
 require_relative '../lib/result_entry'
 require_relative '../lib/result_set'
 
-class ResultSetTest < Minitest::Test
+class ResultEntryTest < Minitest::Test
  attr_reader :r1, :r2, :rs
 
   def setup
-    @r1 = ResultEntry.new({free_and_reduced_price_lunch_rate: 0.5,
+    @r1 = ResultEntry.new({free_or_reduced_price_lunch: 0.5,
         children_in_poverty_rate: 0.25,
         high_school_graduation_rate: 0.75})
-    @r2 = ResultEntry.new({free_and_reduced_price_lunch_rate: 0.3,
+    @r2 = ResultEntry.new({free_or_reduced_price_lunch: 0.3,
         children_in_poverty_rate: 0.2,
         high_school_graduation_rate: 0.6})
 
@@ -17,7 +17,7 @@ class ResultSetTest < Minitest::Test
   end
 
   def test_free_and_reduced_price_lunch
-    assert_equal 0.5, rs.matching_districts.first.free_and_reduced_price_lunch_rate
+    assert_equal 0.5, rs.matching_districts.first.free_or_reduced_price_lunch
   end
 
   def test_children_in_poverty_rate
@@ -29,7 +29,7 @@ class ResultSetTest < Minitest::Test
   end
 
   def test_free_and_reduced_price_lunch_statewide
-    assert_equal 0.3, rs.statewide_average.free_and_reduced_price_lunch_rate
+    assert_equal 0.3, rs.statewide_average.free_or_reduced_price_lunch
   end
 
   def test_children_in_poverty_rate_statewide

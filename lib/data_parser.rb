@@ -128,7 +128,8 @@ module DataParser
 
   def create_poverty_object(object, name, year, data_format, number, data_type)
     if object == nil
-    economic_profiles[name] = EconomicProfile.new({:name => name, data_type  => {year => {data_format => number}}})
+      data = {:name => name, data_type  => {year => {data_format => number}}}
+      economic_profiles[name] = EconomicProfile.new(data)
     else
       add_poverty_data(object, data_type, year, data_format, number)
     end
