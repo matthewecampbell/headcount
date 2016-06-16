@@ -80,18 +80,20 @@ class HeadcountAnalyst
   end
 
   def compare_statewide_data(district_names)
-    # enums
-    results = []
+    r = []
     district_names.map do |district_name|
-      if district_name != "COLORADO"
-        results << kindergarten_participation_correlates_with_high_school_graduation(district_name)
-      end
+      statewide_data_comparison(district_name, r)
     end
-    calculate_statewide_data(results)
+    calculate_statewide_data(r)
+  end
+
+  def statewide_data_comparison(dn, r)
+    if dn != "COLORADO"
+      r << kindergarten_participation_correlates_with_high_school_graduation(dn)
+    end
   end
 
   def calculate_statewide_data(results)
-    # use an appropriate enumberable here
     total = results.count
     counter = 0
     results.each { |result| counter += 1 if result == true }
@@ -100,47 +102,62 @@ class HeadcountAnalyst
   end
 
   def high_poverty_and_high_school_graduation
-    matching_districts = []
+    md = []
     dr.districts.keys.each do |district_name|
-      if district_name != "COLORADO"
+      if high_poverty_and_grad_check(district_name)
+        md << ResultEntry.new({name: district_name, free_or_reduced_price_lunch:
+          @dist_average, children_in_poverty_rate: @poverty_average,
+          high_school_graduation_rate: @grad_average})
+        end
+    end
+    high_poverty_and_grad_result(md)
+  end
+
+  def high_poverty_and_grad_result(md)
+    sr = ResultEntry.new({name: "COLORADO", free_or_reduced_price_lunch:
+    @s_lunch, children_in_poverty_rate: @s_poverty,
+    high_school_graduation_rate: @s_grad})
+    ResultSet.new(matching_districts: md, statewide_average: sr)
+  end
+
+  def high_poverty_and_grad_check(district_name)
+    if district_name != "COLORADO"
       district = dr.find_by_name(district_name)
       check_1 = students_qualifying_for_lunch?(district)
       check_2 = children_in_poverty?(district)
       check_3 = graduation_rate?(district)
-      if check_1 && check_2 && check_3
-        matching_districts << ResultEntry.new({name: district_name, free_or_reduced_price_lunch:
-          @dist_average, children_in_poverty_rate: @poverty_average,
-          high_school_graduation_rate: @grad_average})
-        end
-      end
+      check_1 && check_2 && check_3
     end
-    statewide_result = ResultEntry.new({name: "COLORADO", free_or_reduced_price_lunch:
-      @s_lunch, children_in_poverty_rate: @s_poverty,
-      high_school_graduation_rate: @s_grad})
-    high_poverty_and_grad_result = ResultSet.new(matching_districts: matching_districts,statewide_average: statewide_result)
   end
 
   def high_income_disparity
-    matching_districts = []
+    md = []
     dr.districts.keys.each do |district_name|
-      if district_name != "COLORADO"
-        district = dr.find_by_name(district_name)
-        check_1 = median_household_income?(district)
-        check_2 = children_in_poverty?(district)
-        if check_1 && check_2
-          matching_districts << ResultEntry.new({name: district_name, median_household_income:
+      high_income_disparity_check(district_name)
+          md << ResultEntry.new({name: district_name, median_household_income:
           @income_average, children_in_poverty_rate: @poverty_average,
           })
-        end
-      end
     end
-    statewide_result = ResultEntry.new({name: "COLORADO", median_household_income:
-      @s_income, children_in_poverty_rate: @s_poverty})
-    high_poverty_and_grad_result = ResultSet.new(matching_districts: matching_districts,statewide_average: statewide_result)
+    high_income_disparity_result(md)
+  end
+
+  def high_income_disparity_result(md)
+    sr = ResultEntry.new({name: "COLORADO", median_household_income:
+    @s_income, children_in_poverty_rate: @s_poverty})
+    ResultSet.new(matching_districts: md, statewide_average: sr)
+  end
+
+  def high_income_disparity_check(district_name)
+    if district_name != "COLORADO"
+      district = dr.find_by_name(district_name)
+      check_1 = median_household_income?(district)
+      check_2 = children_in_poverty?(district)
+      check_1 && check_2
+    end
   end
 
   def kindergarten_participation_against_household_income(district_name)
-      if district_name != "COLORADO"
+    if district_name != "COLORADO"
       district = dr.find_by_name(district_name)
       state = dr.find_by_name("COLORADO")
       median_household_income?(district)
@@ -149,36 +166,50 @@ class HeadcountAnalyst
   end
 
   def kindergarten_participation_correlates_with_household_income(district_name)
-    # use an appropriate enumberable here
     results = []
     if district_name[:for] == "STATEWIDE"
-    dr.districts.keys.each do |district_name|
-      if district_name != "COLORADO"
-      district = dr.find_by_name(district_name)
+      dr.districts.keys.each do |district_name|
+        make_results(district_name, results)
+    end
+      tally_results(results)
+    else
+      district = dr.find_by_name(district_name[:for])
       median_household_income?(district)
-      results << if 0.6 < @income_average/@s_income && @income_average/@s_income < 1.5
-      end
+      0.6 < @income_average/@s_income && @income_average/@s_income < 1.5
     end
   end
-  counter = 0
+
+  def make_results(district_name, results)
+    kindergarten_correlates_with_household_income_check(district_name)
+    if 0.6 < @income_average/@s_income && @income_average/@s_income < 1.5
+      results << true
+    else
+      results << false
+    end
+    results
+  end
+
+  def tally_results(results)
+    counter = 0
     results.each do |result|
       counter += 1 if result == true
     end
     counter/results.count > 0.70
-  else
-    district = dr.find_by_name(district_name[:for])
-    median_household_income?(district)
-    0.6 < @income_average/@s_income && @income_average/@s_income < 1.5
   end
+
+  def kindergarten_correlates_with_household_income_check(district_name)
+    if district_name != "COLORADO"
+    district = dr.find_by_name(district_name)
+    median_household_income?(district)
+    end
   end
 
   def median_household_income?(district)
-    # use an appropriate enumberable here
     nums = []
-    percentage = district.economic_profile.attributes[:median_household_income].values
-    percentage.each do |value|
+    pc = district.economic_profile.attributes[:median_household_income].values
+    pc.each do |value|
       nums << value if value.is_a?(Fixnum)
-      end
+    end
     total = nums.reduce(:+)
     @income_average = total/nums.count
     @income_average > statewide_average_income
@@ -190,10 +221,11 @@ class HeadcountAnalyst
     @s_income = total/state[:median_household_income].values.count
   end
 
-  def students_qualifying_for_lunch?(district)
-    # free_and_reduced_price_lunch
+  def students_qualifying_for_lunch?(district_name)
     percentages = []
-    percentage = district.economic_profile.attributes[:free_or_reduced_price_lunch].values.map do |hash|
+    district = dr.find_by_name(district_name)
+    fl = district.economic_profile.attributes[:free_or_reduced_price_lunch]
+    percentage = fl.values.map do |hash|
       if hash[:percentage].is_a?(Float)
       percentages << hash[:percentage]
       end
@@ -205,19 +237,25 @@ class HeadcountAnalyst
   def statewide_average_lunch
     percentages = []
     dr.districts.keys.each do |district_name|
-      district = dr.find_by_name(district_name)
-      district.economic_profile.attributes[:free_or_reduced_price_lunch].values.map do |hash|
-        if hash[:percentage].is_a?(Float)
-          percentages  << hash[:percentage]
-        end
-      end
+      statewide_lunch_percentages(district_name, percentages)
     end
     @s_lunch = truncate_float(percentages.compact.reduce(:+)/percentages.count)
   end
 
+  def statewide_lunch_percentages(district_name, percentages)
+    district = dr.find_by_name(district_name)
+    fl = district.economic_profile.attributes[:free_or_reduced_price_lunch]
+    fl.values.map do |hash|
+      if hash[:percentage].is_a?(Float)
+        percentages  << hash[:percentage]
+      end
+    end
+  end
+
   def children_in_poverty?(district)
     percentages = []
-    percentage = district.economic_profile.attributes[:children_in_poverty].values.map do |hash|
+    poverty = district.economic_profile.attributes[:children_in_poverty]
+    percentage = poverty.values.map do |hash|
       if hash[:percentage].is_a?(Float)
       percentages << hash[:percentage]
     end
@@ -227,18 +265,27 @@ class HeadcountAnalyst
   end
 
   def statewide_poverty
-    percentages = []
+    pc = []
     dr.districts.keys.each do |district_name|
-      if district_name != "COLORADO"
+      statewide_poverty_percentages(district_name, pc)
+    end
+    @s_poverty = truncate_float(pc.compact.reduce(:+)/pc.count)
+  end
+
+  def statewide_poverty_percentages(district_name, percentages)
+    if district_name != "COLORADO"
       district = dr.find_by_name(district_name)
-      district.economic_profile.attributes[:children_in_poverty].values.map do |hash|
-        if hash[:percentage].is_a?(Float)
-          percentages  << hash[:percentage]
-        end
-        end
+      poverty_data = district.economic_profile.attributes[:children_in_poverty]
+      poverty_data.values.map do |poverty|
+      get_statewide_poverty_percentages(poverty)
       end
     end
-    @s_poverty = truncate_float(percentages.compact.reduce(:+)/percentages.count)
+  end
+
+  def get_statewide_poverty_percentages(poverty)
+    if hash[:percentage].is_a?(Float)
+      percentages  << hash[:percentage]
+    end
   end
 
   def graduation_rate?(district)
@@ -252,5 +299,4 @@ class HeadcountAnalyst
     total = state[:high_school_graduation].values.reduce(:+)
     @s_grad = truncate_float(total/state[:high_school_graduation].values.count)
   end
-
 end

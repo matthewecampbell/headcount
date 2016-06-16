@@ -150,6 +150,25 @@ class HeadcountAnalystTest < Minitest::Test
     rs1 = ha.high_income_disparity
     assert_instance_of ResultSet, rs1
     ha.kindergarten_participation_against_household_income("ACADEMY 20")
+    refute ha.kindergarten_participation_correlates_with_household_income(for: "STATEWIDE")
   end
 
+  def test_high_poverty_and_high_school_graduation
+    dr = DistrictRepository.new
+    dr.load_data({
+      :enrollment => {
+        :kindergarten => "./data/Kindergartners in full-day program.csv",
+        :high_school_graduation => "./data/High school graduation rates.csv"
+      },
+      :economic_profile => {
+        :median_household_income => "./data/Median household income.csv",
+        :children_in_poverty => "./data/School-aged children in poverty.csv",
+        :free_or_reduced_price_lunch => "./data/Students qualifying for free or reduced price lunch.csv",
+        :title_i => "./data/Title I students.csv"
+      }
+    })
+    ha = HeadcountAnalyst.new(dr)
+
+    refute ha.students_qualifying_for_lunch?("ACADEMY 20")
+  end
 end

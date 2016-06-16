@@ -2,7 +2,7 @@ require_relative 'test_helper'
 require_relative '../lib/result_entry'
 require_relative '../lib/result_set'
 
-class ResultSetTest < Minitest::Test
+class ResultEntryTest < Minitest::Test
  attr_reader :r1, :r2, :rs
 
   def setup
