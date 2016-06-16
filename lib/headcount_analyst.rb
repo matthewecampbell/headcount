@@ -133,10 +133,11 @@ class HeadcountAnalyst
   def high_income_disparity
     md = []
     dr.districts.keys.each do |district_name|
-      high_income_disparity_check(district_name)
+      if high_income_disparity_check(district_name)
           md << ResultEntry.new({name: district_name, median_household_income:
           @income_average, children_in_poverty_rate: @poverty_average,
           })
+        end
     end
     high_income_disparity_result(md)
   end
@@ -161,7 +162,7 @@ class HeadcountAnalyst
       district = dr.find_by_name(district_name)
       state = dr.find_by_name("COLORADO")
       median_household_income?(district)
-      @income_average/@s_income.to_f
+      truncate_float(@income_average/@s_income.to_f)
     end
   end
 
@@ -221,13 +222,12 @@ class HeadcountAnalyst
     @s_income = total/state[:median_household_income].values.count
   end
 
-  def students_qualifying_for_lunch?(district_name)
+  def students_qualifying_for_lunch?(district)
     percentages = []
-    district = dr.find_by_name(district_name)
     fl = district.economic_profile.attributes[:free_or_reduced_price_lunch]
-    percentage = fl.values.map do |hash|
-      if hash[:percentage].is_a?(Float)
-      percentages << hash[:percentage]
+    percentage = fl.values.map do |free_lunch_data|
+      if free_lunch_data[:percentage].is_a?(Float)
+      percentages << free_lunch_data[:percentage]
       end
     end
     @dist_average = percentages.reduce(:+)/percentages.count
@@ -277,14 +277,14 @@ class HeadcountAnalyst
       district = dr.find_by_name(district_name)
       poverty_data = district.economic_profile.attributes[:children_in_poverty]
       poverty_data.values.map do |poverty|
-      get_statewide_poverty_percentages(poverty)
+      get_statewide_poverty_percentages(poverty, percentages)
       end
     end
   end
 
-  def get_statewide_poverty_percentages(poverty)
-    if hash[:percentage].is_a?(Float)
-      percentages  << hash[:percentage]
+  def get_statewide_poverty_percentages(poverty, percentages)
+    if poverty[:percentage].is_a?(Float)
+      percentages  << poverty[:percentage]
     end
   end
 
